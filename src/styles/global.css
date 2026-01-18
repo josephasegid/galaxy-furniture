@@ -346,11 +346,14 @@ button, input, textarea{ font-family:inherit; }
 
 .modal{
   width: min(980px, 96vw);
+  max-height: 90vh;
   border-radius: 24px;
   border: 1px solid rgba(184,199,221,.16);
   background: linear-gradient(180deg, rgba(11,39,64,.96), rgba(7,26,42,.96));
   box-shadow: 0 24px 70px rgba(0,0,0,.45);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-top{
@@ -364,6 +367,7 @@ button, input, textarea{ font-family:inherit; }
 
 .modal-body{
   padding: 16px;
+  overflow: auto;
 }
 
 .kbd{
