@@ -35,7 +35,7 @@ export default function Home() {
           style={{
             position: "absolute",
             inset: 0,
-           backgroundImage: `
+        backgroundImage: `
   linear-gradient(
     to right,
     rgba(0,41,81,.94),
@@ -44,6 +44,7 @@ export default function Home() {
   ),
   url(/hero/hero-main.jpg)
 `,
+
 
             backgroundSize: "cover",
             backgroundPosition: "center",
