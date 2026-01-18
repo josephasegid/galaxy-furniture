@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import useReveal from "../hooks/useReveal.js";
-
 import useCountUp from "../hooks/useCountUp.js";
 import useInView from "../hooks/useInView.js";
-
-
 
 const PHONE = "0911599541";
 
@@ -16,11 +13,12 @@ export default function Home() {
   const trust = useReveal();
 
   return (
-    <div style={{ display: "grid", gap: 18 }}>
+    <div className="grid" style={{ gap: 18 }}>
       {/* ================= HERO (BIG IMAGE) ================= */}
       <section
         ref={hero}
-        className="card glow reveal"
+      className="card glow reveal hero-fix"
+
         style={{
           padding: 0,
           overflow: "hidden",
@@ -30,22 +28,21 @@ export default function Home() {
           alignItems: "center",
         }}
       >
-        {/* Background image with gradient overlay */}
+        {/* Background image */}
         <div
+          aria-hidden="true"
           style={{
             position: "absolute",
             inset: 0,
-        backgroundImage: `
-  linear-gradient(
-    to right,
-    rgba(0,41,81,.94),
-    rgba(0,41,81,.72),
-    rgba(0,41,81,.28)
-  ),
-  url(/hero/hero-main.jpg)
-`,
-
-
+            backgroundImage: `
+              linear-gradient(
+                to right,
+                rgba(0,41,81,.96),
+                rgba(0,41,81,.72),
+                rgba(0,41,81,.22)
+              ),
+              url(/hero/hero-main.jpg)
+            `,
             backgroundSize: "cover",
             backgroundPosition: "center",
             transform: "scale(1.03)",
@@ -53,77 +50,101 @@ export default function Home() {
           }}
         />
 
-        {/* Content wrapper with correct padding */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 2,
-            width: "100%",
-            padding: "96px 24px",
-          }}
-        >
-          <div
-            className="container"
-            style={{
-              display: "grid",
-              gap: 22,
-            }}
-          >
-            <div style={{ maxWidth: 780 }}>
-              <span className="badge">Galaxy Furniture • Addis Ababa</span>
-
-              <h1 className="h1" style={{ marginTop: 16 }}>
-                Furnish your home with{" "}
-                <span style={{ color: "#FFD700" }}>style</span>,{" "}
-                <span style={{ color: "#FFD700" }}>comfort</span> &{" "}
-                <span style={{ color: "#FFD700" }}>confidence</span>
-              </h1>
-
-              <p
-                className="p"
-                style={{
-                  fontSize: 16,
-                  maxWidth: 640,
-                  lineHeight: 1.75,
-                }}
-              >
-                Galaxy Furniture designs and manufactures premium sofas, beds, wardrobes,
-                dining tables, and office furniture. Trusted by <strong>thousands of customers</strong>,
-                we deliver quality finishing, durable materials, and reliable service.
-              </p>
-
+        {/* Content */}
+        <div style={{ position: "relative", zIndex: 2, width: "100%" }}>
+          <div className="hero-safe">
+            <div className="hero-frame">
               <div
+                className="card"
                 style={{
-                  display: "flex",
-                  gap: 14,
-                  flexWrap: "wrap",
-                  marginTop: 22,
+                  background: "rgba(0,0,0,.10)",
+                  border: "1px solid rgba(255,255,255,.10)",
+                  boxShadow: "0 10px 36px rgba(0,0,0,.18)",
+                  overflow: "hidden",
+                  borderRadius: 22,
+                  padding: 20,
+                 
+              
+                  
+                 
+              
                 }}
               >
-                <Link className="btn primary" to="/products" style={{ borderRadius: 999 }}>
-                  Explore Products
-                </Link>
-                <Link className="btn" to="/branches" style={{ borderRadius: 999 }}>
-                  Visit Branches
-                </Link>
-                <a className="btn ghost" href={`tel:${PHONE}`} style={{ borderRadius: 999 }}>
-                  Call: {PHONE}
-                </a>
-              </div>
+                <div className="hero-inner">
+                  <div className="container" style={{ display: "grid", gap: 18 }}>
+                    {/* Text */}
+                    <div style={{ maxWidth: 860 }}>
+                      <span className="badge">Galaxy Furniture • Addis Ababa</span>
 
-              {/* Quick trust stats */}
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 18 }}>
-                <HeroStat label="Customers" value="1000+" />
-                <HeroStat label="Branches" value="3" />
-                <HeroStat label="Workshop" value="1" />
-              </div>
-            </div>
+                      <h1 className="h1" style={{ marginTop: 16 }}>
+                        Furnish your home with{" "}
+                        <span style={{ color: "#FFD700" }}>style</span>,{" "}
+                        <span style={{ color: "#FFD700" }}>comfort</span> &{" "}
+                        <span style={{ color: "#FFD700" }}>confidence</span>
+                      </h1>
 
-            {/* Promise cards */}
-            <div className="grid cols-3" style={{ alignItems: "stretch" }}>
-              <MiniPromise title="Free Delivery" desc="Free delivery available for selected areas in Addis Ababa." />
-              <MiniPromise title="Warranty Support" desc="Warranty options available depending on product type and materials." />
-              <MiniPromise title="Custom Orders" desc="Choose size, color, and finishing that fits your home or office." />
+                      <p
+                        className="p"
+                        style={{
+                          marginTop: 12,
+                          maxWidth: 680,
+                          fontSize: 16,
+                          lineHeight: 1.8,
+                        }}
+                      >
+                        Galaxy Furniture designs and manufactures premium sofas, beds, wardrobes,
+                        dining tables, and office furniture. Trusted by{" "}
+                        <strong>thousands of customers</strong>, we deliver quality finishing,
+                        durable materials, and reliable service.
+                      </p>
+
+                      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 18 }}>
+                        <Link className="btn primary" to="/products">
+                          Explore Products
+                        </Link>
+                        <Link className="btn" to="/branches">
+                          Visit Branches
+                        </Link>
+                        <a className="btn ghost" href={`tel:${PHONE}`}>
+                          Call: {PHONE}
+                        </a>
+                      </div>
+
+                      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
+                        <HeroStat label="Customers" value="1000+" />
+                        <HeroStat label="Branches" value="3" />
+                        <HeroStat label="Workshop" value="1" />
+                      </div>
+                    </div>
+
+                    {/* Promise cards */}
+                    <div
+                      className="grid cols-3"
+                      style={{
+                        alignItems: "stretch",
+                        marginTop: 14,
+                        marginBottom: 6,
+                        maxWidth: 900, // keeps it away from far-right edge
+                        gap: 12,
+                        padding:50,
+                      }}
+                    >
+                      <MiniPromise
+                        title="Free Delivery"
+                        desc="Free delivery available for selected areas in Addis Ababa."
+                      />
+                      <MiniPromise
+                        title="Warranty Support"
+                        desc="Warranty options available depending on product type and materials."
+                      />
+                      <MiniPromise
+                        title="Custom Orders"
+                        desc="Choose size, color, and finishing that fits your home or office."
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -136,11 +157,7 @@ export default function Home() {
           value="Thousands +"
           note="Trusted by families and businesses across Addis Ababa."
         />
-        <StatCard
-          title="Branches"
-          value="3"
-          note="Semit 72 • Figa • Goro"
-        />
+        <StatCard title="Branches" value="3" note="Semit 72 • Figa • Goro" />
         <StatCard
           title="Workshop"
           value="1"
@@ -150,14 +167,25 @@ export default function Home() {
 
       {/* ================= SERVICES ================= */}
       <section ref={services} className="card reveal" style={{ padding: 22 }}>
-        <div style={{ display: "flex", alignItems: "end", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-          <div>
-            <h2 className="h2" style={{ marginBottom: 6 }}>What we offer</h2>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "end",
+            justifyContent: "space-between",
+            gap: 12,
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ maxWidth: 760 }}>
+            <h2 className="h2" style={{ marginBottom: 6 }}>
+              What we offer
+            </h2>
             <p className="p">
               We focus on comfort, durability and premium finishing — with a service experience that customers love.
             </p>
           </div>
-          <Link className="btn ghost" to="/products" style={{ borderRadius: 999 }}>
+
+          <Link className="btn ghost" to="/products">
             View Categories
           </Link>
         </div>
@@ -178,9 +206,11 @@ export default function Home() {
       <section ref={workshop} className="grid cols-2 reveal" style={{ alignItems: "stretch" }}>
         <div className="card glow" style={{ padding: 22 }}>
           <span className="badge">Workshop & Machinery</span>
-          <h2 className="h2" style={{ marginTop: 12 }}>Made with skill + modern production</h2>
+          <h2 className="h2" style={{ marginTop: 12 }}>
+            Made with skill + modern production
+          </h2>
 
-          <p className="p">
+          <p className="p" style={{ marginTop: 10 }}>
             Our central workshop is designed for consistent quality. We use professional tools and machinery to ensure
             clean finishing, strong structure, and reliable output for both standard and custom orders.
           </p>
@@ -193,17 +223,19 @@ export default function Home() {
           </div>
 
           <div style={{ marginTop: 16, display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <Link className="btn primary" to="/about" style={{ borderRadius: 999 }}>
+            <Link className="btn primary" to="/about">
               Learn About Us
             </Link>
-            <a className="btn ghost" href={`tel:${PHONE}`} style={{ borderRadius: 999 }}>
+            <a className="btn ghost" href={`tel:${PHONE}`}>
               Ask About Custom Orders
             </a>
           </div>
         </div>
 
         <div className="card hover-lift" style={{ padding: 22, display: "grid", gap: 12 }}>
-          <h2 className="h2" style={{ marginBottom: 0 }}>Popular categories</h2>
+          <h2 className="h2" style={{ marginBottom: 0 }}>
+            Popular categories
+          </h2>
           <p className="p">Explore our best-selling categories. New designs are added regularly.</p>
 
           <div className="grid cols-2">
@@ -215,7 +247,7 @@ export default function Home() {
             <CategoryChip title="Custom Orders" />
           </div>
 
-          <Link className="btn" to="/products" style={{ borderRadius: 999, justifySelf: "start" }}>
+          <Link className="btn" to="/products" style={{ justifySelf: "start" }}>
             Browse Products
           </Link>
         </div>
@@ -223,9 +255,19 @@ export default function Home() {
 
       {/* ================= TRUST / CTA ================= */}
       <section ref={trust} className="card reveal" style={{ padding: 22 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
-          <div>
-            <h2 className="h2" style={{ marginBottom: 6 }}>Trusted by thousands of customers</h2>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 12,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ maxWidth: 760 }}>
+            <h2 className="h2" style={{ marginBottom: 6 }}>
+              Trusted by thousands of customers
+            </h2>
             <p className="p">
               We help families furnish homes beautifully and support businesses with reliable office furniture.
               Tell us what you need — we’ll recommend the best option.
@@ -233,10 +275,10 @@ export default function Home() {
           </div>
 
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <Link className="btn primary" to="/contact" style={{ borderRadius: 999 }}>
+            <Link className="btn primary" to="/contact">
               Contact & Get Quote
             </Link>
-            <Link className="btn ghost" to="/branches" style={{ borderRadius: 999 }}>
+            <Link className="btn ghost" to="/branches">
               Find Nearest Branch
             </Link>
           </div>
@@ -247,9 +289,9 @@ export default function Home() {
 }
 
 /* ===== Small components ===== */
+
 function HeroStat({ label, value }) {
   const number = parseInt(String(value).replace(/\D/g, "")) || 0;
-
   const { ref, inView } = useInView({ threshold: 0.35, once: true });
 
   const count = useCountUp({
@@ -263,18 +305,23 @@ function HeroStat({ label, value }) {
       ref={ref}
       className="chip hover-lift"
       style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        padding: "10px 12px",
         background: "rgba(255,255,255,.06)",
         borderColor: "rgba(255,215,0,.25)",
       }}
     >
-      <strong style={{ color: "#FFD700", fontSize: 20 }}>
+      <strong style={{ color: "#FFD700", fontSize: 18, fontWeight: 950 }}>
         {number ? `${count}+` : value}
       </strong>
-      <span className="small">{label}</span>
+      <span className="small" style={{ whiteSpace: "nowrap" }}>
+        {label}
+      </span>
     </div>
   );
 }
-
 
 function MiniPromise({ title, desc }) {
   return (
@@ -289,7 +336,6 @@ function MiniPromise({ title, desc }) {
 
 function StatCard({ title, value, note }) {
   const numeric = parseInt(String(value).replace(/\D/g, "")) || 0;
-
   const { ref, inView } = useInView({ threshold: 0.25, once: true });
 
   const count = useCountUp({
@@ -304,11 +350,12 @@ function StatCard({ title, value, note }) {
       <div style={{ fontSize: 30, fontWeight: 950, marginTop: 6, color: "#FFD700" }}>
         {numeric ? `${count}+` : value}
       </div>
-      <p className="p" style={{ marginTop: 8, fontSize: 14 }}>{note}</p>
+      <p className="p" style={{ marginTop: 8, fontSize: 14 }}>
+        {note}
+      </p>
     </div>
   );
 }
-
 
 function Feature({ title, desc }) {
   return (
@@ -344,10 +391,9 @@ function Bullet({ text }) {
 
 function CategoryChip({ title }) {
   return (
-    <div className="chip hover-lift" style={{ justifyContent: "space-between" }}>
+    <div className="chip hover-lift" style={{ justifyContent: "space-between", display: "flex", alignItems: "center" }}>
       <span style={{ fontWeight: 900 }}>{title}</span>
       <span style={{ color: "#FFD700", fontWeight: 900 }}>→</span>
     </div>
   );
 }
-

@@ -1,6 +1,27 @@
 const PHONE = "0911599541";
+const WHATSAPP = "https://wa.me/251911599541";
+
+const branches = [
+  {
+    name: "Semit 72",
+    address: "In front of Getas Real Estate",
+    phones: ["0967333435"],
+  },
+  {
+    name: "Figa",
+    address: "Around traffic light",
+    phones: ["0965333435", "0964333435"],
+  },
+  {
+    name: "Goro",
+    address: "In front of Sunrise Real Estate",
+    phones: ["0966333435"],
+  },
+];
 
 export default function Footer() {
+  const chipBaseStyle = { height: "100%", alignSelf: "stretch" };
+
   return (
     <footer
       style={{
@@ -10,8 +31,11 @@ export default function Footer() {
       }}
     >
       <div className="container" style={{ padding: "22px 0" }}>
-        <div className="grid cols-3" style={{ alignItems: "start", gap: 16 }}>
-          <div className="chip" style={{ display: "flex", gap: 12, alignItems: "center" }}>
+        <div className="grid cols-3" style={{ alignItems: "stretch", gap: 16 }}>
+          <div
+            className="chip"
+            style={{ ...chipBaseStyle, display: "flex", gap: 12, alignItems: "center" }}
+          >
             <img
               src="/brand/logo.png"
               alt="Galaxy Furniture"
@@ -29,22 +53,47 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="chip">
+          <div className="chip" style={{ ...chipBaseStyle, display: "flex", flexDirection: "column" }}>
             <div style={{ fontWeight: 900 }}>Branches</div>
             <div className="small" style={{ marginTop: 6 }}>
-              Semit 72 • Figa • Goro
+              {branches.map((branch) => (
+                <div key={branch.name} style={{ marginBottom: 8 }}>
+                  <div style={{ fontWeight: 800 }}>{branch.name} Branch</div>
+                  <div>{branch.address}</div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="chip">
+          <div className="chip" style={{ ...chipBaseStyle, display: "flex", flexDirection: "column" }}>
             <div style={{ fontWeight: 900 }}>Contact</div>
             <div className="small" style={{ marginTop: 6 }}>
-              Phone:{" "}
+              Main:{" "}
               <a href={`tel:${PHONE}`} style={{ color: "#FFD700", fontWeight: 900 }}>
                 {PHONE}
               </a>
               <br />
-              Addis Ababa, Ethiopia
+              WhatsApp:{" "}
+              <a href={WHATSAPP} target="_blank" rel="noreferrer" style={{ color: "#FFD700", fontWeight: 900 }}>
+                Chat with us
+              </a>
+              <div style={{ marginTop: 8 }}>
+                {branches.map((branch) => (
+                  <div key={`${branch.name}-phones`} style={{ marginBottom: 6 }}>
+                    <div style={{ fontWeight: 800 }}>{branch.name} phones</div>
+                    <div>
+                      {branch.phones.map((p, idx) => (
+                        <span key={p}>
+                          <a href={`tel:${p}`} style={{ color: "#FFD700", fontWeight: 900 }}>
+                            {p}
+                          </a>
+                          {idx < branch.phones.length - 1 ? " / " : ""}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -52,7 +101,7 @@ export default function Footer() {
         <hr className="hr" />
 
         <div className="small" style={{ textAlign: "center", color: "rgba(184,199,221,.92)" }}>
-          © {new Date().getFullYear()} Galaxy Furniture. All rights reserved.
+          (c) {new Date().getFullYear()} Galaxy Furniture. All rights reserved. Built in Addis Ababa.
         </div>
       </div>
     </footer>

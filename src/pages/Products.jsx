@@ -23,6 +23,70 @@ const PRODUCTS = [
     price: 62000,
     image: "/src/assets/products/sofa-2.jpg",
   },
+  {
+    id: "sofa-3",
+    category: "Sofas",
+    name: "Sofa Collection 1",
+    description: "Spacious sofa set with soft cushions and a clean, modern silhouette.",
+    price: 70000,
+    image: "/products/sofa%20(1).jpg",
+  },
+  {
+    id: "sofa-4",
+    category: "Sofas",
+    name: "Sofa Collection 2",
+    description: "Comfort-first seating with sturdy build and premium upholstery.",
+    price: 72000,
+    image: "/products/sofa%20(2).JPG",
+  },
+  {
+    id: "sofa-5",
+    category: "Sofas",
+    name: "Sofa Collection 3",
+    description: "Balanced design with deep seating and supportive back cushions.",
+    price: 68000,
+    image: "/products/sofa%20(3).JPG",
+  },
+  {
+    id: "sofa-6",
+    category: "Sofas",
+    name: "Sofa Collection 4",
+    description: "Elegant living room set with durable fabric and smooth finishing.",
+    price: 76000,
+    image: "/products/sofa%20(4).JPG",
+  },
+  {
+    id: "sofa-7",
+    category: "Sofas",
+    name: "Sofa Collection 5",
+    description: "Cozy seating with strong frame and premium foam comfort.",
+    price: 74000,
+    image: "/products/sofa%20(5).JPG",
+  },
+  {
+    id: "sofa-8",
+    category: "Sofas",
+    name: "Sofa Collection 6",
+    description: "Modern profile with wide seats and a refined look.",
+    price: 71000,
+    image: "/products/sofa%20(6).jpg",
+  },
+  {
+    id: "sofa-9",
+    category: "Sofas",
+    name: "Sofa Collection 7",
+    description: "Soft-touch upholstery with supportive cushions for daily use.",
+    price: 73000,
+    image: "/products/sofa%20(7).jpg",
+  },
+  {
+    id: "sofa-10",
+    category: "Sofas",
+    name: "Sofa Collection 8",
+    description: "Premium sofa set designed for style and long-lasting comfort.",
+    price: 78000,
+    image: "/products/sofa%20(8).jpg",
+  },
 
   // Beds
   {
@@ -194,7 +258,7 @@ export default function Products() {
   );
 
   return (
-    <div className="grid" style={{ gap: 18 }}>
+    <div className="grid" style={{ gap: 18, marginTop: 8 }}>
       {/* Toasts */}
       <div className="toast-wrap" aria-live="polite" aria-atomic="true">
         {toasts.map((t) => (
@@ -218,7 +282,7 @@ export default function Products() {
       </div>
 
       {/* Header + Filters */}
-      <section className="card glow reveal" style={{ padding: 22 }}>
+      <section className="card glow" style={{ padding: 22 }}>
         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
           <div>
             <span className="badge">Products</span>
@@ -279,7 +343,7 @@ export default function Products() {
 
       {/* Category sections (from filtered results) */}
       {Object.keys(grouped).length === 0 ? (
-        <section className="card reveal" style={{ padding: 22 }}>
+        <section className="card" style={{ padding: 22 }}>
           <h2 className="h2" style={{ marginBottom: 6 }}>No results</h2>
           <p className="p">Try changing the category or search text.</p>
         </section>
@@ -308,11 +372,11 @@ export default function Products() {
       )}
 
       {/* Cart summary */}
-      <section className="card reveal" style={{ padding: 22 }}>
+      <section className="card" style={{ padding: 22 }}>
         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
           <div>
             <h2 className="h2" style={{ marginBottom: 6 }}>Cart Summary</h2>
-            <p className="p">Demo cart. You can send the order via WhatsApp.</p>
+            <p className="p">Demo cart. You can send the order via WhatsApp or pay by bank transfer.</p>
           </div>
 
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -363,6 +427,25 @@ export default function Products() {
                 <span className="small">Total</span>
                 <strong style={{ marginLeft: 10, color: "#FFD700" }}>{formatMoney(cartTotal)}</strong>
               </div>
+            </div>
+
+            <div className="chip" style={{ justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+              <div>
+                <strong>Bank transfer checkout</strong>
+                <div className="small">Send your receipt via WhatsApp after transfer.</div>
+              </div>
+              <button
+                className="btn ghost"
+                onClick={() =>
+                  pushToast({
+                    title: "Bank transfer",
+                    message: "Please use your preferred bank and send the receipt to WhatsApp.",
+                  })
+                }
+                style={{ borderRadius: 999 }}
+              >
+                Bank Transfer
+              </button>
             </div>
           </div>
         )}
