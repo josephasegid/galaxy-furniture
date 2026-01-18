@@ -363,6 +363,7 @@ export default function Navbar() {
           .nav-desktop{ display:none !important; }
           .nav-mobile-btn{ display:inline-flex !important; align-items:center; justify-content:center; }
           .nav-mobile-panel{ display:block !important; }
+          .nav-actions .pill{ display:none !important; }
 
           /* make topbar actions smaller on mobile */
           .nav-topbar-actions .pill{
