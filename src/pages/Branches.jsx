@@ -84,7 +84,7 @@ export default function Branches() {
             >
               <a
                 className="btn ghost"
-                href="tel:0911599541"
+                href="tel:0965333435"
                 style={{ borderRadius: 999 }}
               >
                 Call

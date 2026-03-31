@@ -13,7 +13,7 @@ export default function About() {
 
         <div className="grid cols-2">
           <Info title="Owner" value="Seid Mohamed Taye" />
-          <Info title="Phone" value="0911599541" />
+          <Info title="Phone" value="0965333435" />
           <Info title="Branches" value="3" />
           <Info title="Workshop" value="1" />
         </div>

@@ -266,12 +266,12 @@ button, input, textarea{ font-family:inherit; }
 /* Scroll-reveal: elements start hidden, then show */
 .reveal {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateX(-20px);
   transition: opacity .6s ease, transform .6s ease;
 }
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 /* Reduce motion accessibility */

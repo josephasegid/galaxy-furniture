@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { CATEGORY_LINKS } from "../data/categories.js";
 
-const PHONE = "0911599541";
-const WHATSAPP = "https://wa.me/251911599541"; // Ethiopia: 251 + 911599541
+const PHONE = "0965333435";
+const WHATSAPP = "https://wa.me/251965333435"; // Ethiopia: 251 + 965333435
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/products", label: "Products" },
-  { to: "/branches", label: "Branches" },
+  { to: "/products", label: "Shop" },
+  ...CATEGORY_LINKS,
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ];
@@ -155,7 +156,10 @@ export default function Navbar() {
           align-items:center;
           justify-content:space-between;
           gap:10px;
-          padding: 8px 0;
+          padding: 8px clamp(10px, 4vw, 24px);
+          width: 100%;
+          max-width: 100%;
+          margin: 0 auto;
         }
         .nav-topbar-text{
           display:flex;
@@ -190,7 +194,10 @@ export default function Navbar() {
           align-items:center;
           justify-content:space-between;
           gap:14px;
-          padding: 12px 0;
+          padding: 12px clamp(12px, 4vw, 26px);
+          width: 100%;
+          max-width: 100%;
+          margin: 0 auto;
         }
         .nav-brand{
           display:flex;
@@ -325,9 +332,11 @@ export default function Navbar() {
           transform: translateY(0);
         }
         .nav-mobile-inner{
-          padding: 12px 0 16px;
+          padding: 12px clamp(10px, 4vw, 22px) 16px;
           display:grid;
           gap: 12px;
+          width: 100%;
+          max-width: 100%;
         }
         .nav-mobile-links{
           display:grid;

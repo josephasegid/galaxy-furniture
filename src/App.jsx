@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
-
+import { Analytics } from "@vercel/analytics/react"
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Products from "./pages/Products.jsx";
+import CategoryPage from "./pages/CategoryPage.jsx";
 import Branches from "./pages/Branches.jsx";
 import Contact from "./pages/Contact.jsx";
+import { CATEGORY_PAGES } from "./data/categories.js";
 
 export default function App() {
   return (
@@ -23,12 +25,12 @@ export default function App() {
           </div>
 
           <div className="announce-right">
-            <a className="btn ghost" href="tel:0911599541" style={{ borderRadius: 999 }}>
-              Call: 0911599541
+            <a className="btn ghost" href="tel:0965333435" style={{ borderRadius: 999 }}>
+              Call: 0965333435
             </a>
             <a
               className="btn primary"
-              href="https://wa.me/251911599541?text=Hello%20Galaxy%20Furniture%2C%20I%20want%20to%20ask%20about%20furniture."
+              href="https://wa.me/251965333435?text=Hello%20Galaxy%20Furniture%2C%20I%20want%20to%20ask%20about%20furniture."
               target="_blank"
               rel="noreferrer"
               style={{ borderRadius: 999 }}
@@ -45,6 +47,13 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          {CATEGORY_PAGES.map((page) => (
+            <Route
+              key={page.slug}
+              path={`/${page.slug}`}
+              element={<CategoryPage category={page.label} />}
+            />
+          ))}
           <Route path="/branches" element={<Branches />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
