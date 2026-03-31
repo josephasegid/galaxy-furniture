@@ -196,6 +196,22 @@ export default function Home() {
 
   return (
     <div className="grid" style={{ gap: 24 }}>
+      <style>{`
+        .hero-backdrop{
+          background-image:
+            linear-gradient(90deg, rgba(10,25,47,.84) 0%, rgba(10,25,47,.62) 42%, rgba(10,25,47,.14) 100%),
+            url(/hero/images/optimized.jpg);
+        }
+
+        @media (max-width: 860px){
+          .hero-backdrop{
+            background-image:
+              linear-gradient(180deg, rgba(10,25,47,.76) 0%, rgba(10,25,47,.48) 45%, rgba(10,25,47,.16) 100%),
+              url(/hero/images/hero%20for%20mobile.jpg);
+            background-position: center top;
+          }
+        }
+      `}</style>
       <section
         ref={hero}
         className="reveal"
@@ -214,12 +230,11 @@ export default function Home() {
         }}
       >
         <div
+          className="hero-backdrop"
           aria-hidden="true"
           style={{
             position: "absolute",
             inset: 0,
-            backgroundImage:
-              "linear-gradient(90deg, rgba(10,25,47,.84) 0%, rgba(10,25,47,.62) 42%, rgba(10,25,47,.14) 100%), url(/hero/images/optimized.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             transform: "scale(1.03)",
