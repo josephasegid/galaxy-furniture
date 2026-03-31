@@ -209,8 +209,7 @@ export default function Home() {
           marginRight: "-50vw",
           padding: "clamp(32px, 6vw, 68px) 0",
           overflow: "hidden",
-          background:
-            "linear-gradient(135deg, rgba(3,17,30,.96), rgba(1,18,33,.78)), radial-gradient(900px 520px at 80% 18%, rgba(255,215,0,.12), transparent 55%)",
+          background: "var(--navy)",
           borderBottom: "1px solid rgba(184,199,221,.12)",
         }}
       >
@@ -220,7 +219,7 @@ export default function Home() {
             position: "absolute",
             inset: 0,
             backgroundImage:
-              "linear-gradient(90deg, rgba(2,16,30,.96) 0%, rgba(2,16,30,.76) 40%, rgba(2,16,30,.22) 100%), url(/hero/hero-main.jpg)",
+              "linear-gradient(90deg, rgba(10,25,47,.98) 0%, rgba(10,25,47,.86) 42%, rgba(10,25,47,.26) 100%), url(/hero/hero-main.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             transform: "scale(1.03)",
@@ -233,8 +232,7 @@ export default function Home() {
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,.04), transparent 20%), radial-gradient(520px 220px at 70% 20%, rgba(255,215,0,.16), transparent 60%)",
+            background: "none",
           }}
         />
 
@@ -508,8 +506,7 @@ export default function Home() {
               display: "grid",
               gap: 16,
               alignContent: "center",
-              background:
-                "linear-gradient(160deg, rgba(10,40,66,.96), rgba(7,26,42,.96))",
+              background: "var(--navy)",
             }}
           >
             <span className="badge">{showroomSlide.badge}</span>
@@ -555,8 +552,7 @@ export default function Home() {
           className="card glow"
           style={{
             padding: 28,
-            background:
-              "linear-gradient(135deg, rgba(13,44,71,.95), rgba(7,26,42,.96))",
+            background: "var(--navy)",
           }}
         >
           <div className="grid cols-2" style={{ gap: 20, alignItems: "center" }}>

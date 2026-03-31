@@ -185,7 +185,7 @@ export default function Navbar() {
 
         /* Main */
         .nav-main{
-          background: linear-gradient(135deg, rgba(2, 20, 35, .88), rgba(8, 28, 48, .68));
+          background: rgba(10, 25, 47, .94);
           border-bottom: 1px solid rgba(184,199,221,.14);
           backdrop-filter: blur(12px);
         }
