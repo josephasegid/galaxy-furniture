@@ -19,7 +19,7 @@ const CATEGORY_CARDS = [
     title: "Beds",
     to: "/beds",
     description: "Comfort-first bedroom furniture with strong structure, clean lines, and refined finishing.",
-    image: "/hero/hero-main.jpg",
+    image: "/hero/hero%201.png",
   },
   {
     title: "Dining Tables",
@@ -70,7 +70,7 @@ const FEATURED_PRODUCTS = [
     name: "Luxury Bedroom Set",
     price: "ETB 78,000",
     description: "Strong structure, refined detailing, and a premium look for restful modern bedrooms.",
-    image: "/hero/hero-main.jpg",
+    image: "/hero/hero%201.png",
   },
 ];
 
@@ -219,7 +219,7 @@ export default function Home() {
             position: "absolute",
             inset: 0,
             backgroundImage:
-              "linear-gradient(90deg, rgba(10,25,47,.98) 0%, rgba(10,25,47,.86) 42%, rgba(10,25,47,.26) 100%), url(/hero/hero-main.jpg)",
+              "linear-gradient(90deg, rgba(10,25,47,.84) 0%, rgba(10,25,47,.62) 42%, rgba(10,25,47,.14) 100%), url(/hero/hero%201.png)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             transform: "scale(1.03)",

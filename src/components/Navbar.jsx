@@ -63,7 +63,7 @@ export default function Navbar() {
           >
             <img className="nav-logo" src="/brand/logo.png" alt="Galaxy Furniture Logo" />
             <div className="nav-brand-text">
-              <div className="nav-title">Galaxy Furniture</div>
+              <div className="nav-title">GALAXY FURNITURE</div>
               <div className="nav-subtitle">Premium Furniture | Addis Ababa</div>
             </div>
           </NavLink>
@@ -221,15 +221,21 @@ export default function Navbar() {
           min-width: 0;
         }
         .nav-title{
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          font-size: 15px;
           font-weight: 950;
-          letter-spacing: .2px;
+          letter-spacing: .18em;
+          text-transform: uppercase;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: 52vw;
         }
         .nav-subtitle{
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
           font-size: 13px;
+          letter-spacing: .08em;
+          text-transform: uppercase;
           color: rgba(184,199,221,.92);
           white-space: nowrap;
           overflow: hidden;
@@ -323,7 +329,7 @@ export default function Navbar() {
           opacity: 0;
           transform: translateY(-6px);
           transition: max-height .22s ease, opacity .18s ease, transform .18s ease;
-          background: rgba(2, 20, 35, .92);
+          background: rgba(10, 25, 47, .96);
           border-top: 1px solid rgba(184,199,221,.14);
         }
         .nav-mobile-panel.open{
