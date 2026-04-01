@@ -10,7 +10,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "Blue Leather Bed",
     description: "Bold leather bed design with a premium headboard and a polished modern look.",
-    price: 84000,
+    price: 85000,
     image: "/products/beds%20web/images/Blue-Leather-Bed.jpg",
   },
   {
@@ -18,7 +18,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "Brown Bed",
     description: "Warm brown finish with a clean profile designed for elegant and comfortable bedrooms.",
-    price: 79000,
+    price: 85000,
     image: "/products/beds%20web/images/Brown-Bed.jpg",
     variants: [
       { id: "bed-brown-1", label: "Brown Bed", color: "Brown", image: "/products/beds%20web/images/Brown-Bed.jpg" },
@@ -30,7 +30,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "Cream Square Bed",
     description: "Soft cream upholstery and squared detailing for a refined contemporary bedroom.",
-    price: 81000,
+    price: 85000,
     image: "/products/beds%20web/images/Cream-Square.jpg",
     variants: [
       { id: "bed-cream-square-1", label: "Cream Square", color: "Cream", image: "/products/beds%20web/images/Cream-Square.jpg" },
@@ -42,7 +42,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "Cream Textured Bed",
     description: "Textured cream upholstery with a luxury finish designed for soft, inviting interiors.",
-    price: 83500,
+    price: 85000,
     image: "/products/beds%20web/images/Cream-Texture-bed.jpg",
     variants: [
       { id: "bed-cream-textured-1", label: "Cream Texture", color: "Cream", image: "/products/beds%20web/images/Cream-Texture-bed.jpg" },
@@ -57,7 +57,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "Double Bed",
     description: "A spacious double bed with balanced structure and durable finishing for everyday comfort.",
-    price: 76000,
+    price: 85000,
     image: "/products/beds%20web/images/Double-Bed.jpg",
     variants: [
       { id: "bed-double-1", label: "Double Bed", image: "/products/beds%20web/images/Double-Bed.jpg" },
@@ -69,7 +69,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "Kids Bed Collection",
     description: "Playful kids beds created to bring comfort, personality, and fun into children's rooms.",
-    price: 54000,
+    price: 85000,
     image: "/products/beds%20web/images/Kids-Bed.jpg",
     variants: [
       { id: "bed-kids-1", label: "Kids Bed", image: "/products/beds%20web/images/Kids-Bed.jpg" },
@@ -84,7 +84,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "O-Shaped Bed",
     description: "Distinctive rounded headboard styling for customers who want a bed with visual character.",
-    price: 88000,
+    price: 85000,
     image: "/products/beds%20web/images/O-Shaped-Bed.jpg",
     variants: [
       { id: "bed-o-shaped-1", label: "O-Shaped Bed", image: "/products/beds%20web/images/O-Shaped-Bed.jpg" },
@@ -96,7 +96,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "Square Leather Bed",
     description: "Square-profile leather bed crafted for a premium and structured bedroom setup.",
-    price: 86000,
+    price: 85000,
     image: "/products/beds%20web/images/Square-Leather-bed-1.jpg",
     variants: [
       { id: "bed-square-leather-1", label: "Square Leather Bed", image: "/products/beds%20web/images/Square-Leather-bed-1.jpg" },
@@ -110,7 +110,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "T-Shape Bed",
     description: "Modern T-shape bed design available in rich dark tones and soft cream finishing.",
-    price: 89000,
+    price: 85000,
     image: "/products/beds%20web/images/T-Shape-Black-Bed.jpg",
     variants: [
       { id: "bed-t-shape-black-1", label: "T-Shape Black Bed", color: "Black", image: "/products/beds%20web/images/T-Shape-Black-Bed.jpg" },
@@ -124,7 +124,7 @@ const BED_PRODUCTS = [
     category: "Beds",
     name: "V-Shape Cream Bed",
     description: "Elegant V-shape headboard styling with a soft cream tone and clean premium finish.",
-    price: 84500,
+    price: 85000,
     image: "/products/beds%20web/images/V-Shape-Cream-bed.jpg",
     variants: [
       { id: "bed-v-shape-1", label: "V-Shape Cream Bed", color: "Cream", image: "/products/beds%20web/images/V-Shape-Cream-bed.jpg" },
@@ -141,7 +141,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Royal L-Shape Sofa",
     description: "Modern L-shape sofa with premium fabric and strong foam for daily comfort.",
-    price: 85000,
+    price: 150000,
     image: "/src/assets/products/sofa-1.jpg",
   },
   {
@@ -149,7 +149,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Classic 3-Seater Sofa",
     description: "Elegant design with durable frame and soft cushions—perfect for living rooms.",
-    price: 62000,
+    price: 150000,
     image: "/src/assets/products/sofa-2.jpg",
   },
   {
@@ -157,7 +157,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Sofa Collection 1",
     description: "Spacious sofa set with soft cushions and a clean, modern silhouette.",
-    price: 70000,
+    price: 150000,
     image: "/products/sofa%20(1).jpg",
   },
   {
@@ -165,7 +165,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Sofa Collection 2",
     description: "Comfort-first seating with sturdy build and premium upholstery.",
-    price: 72000,
+    price: 150000,
     image: "/products/sofa%20(2).JPG",
   },
   {
@@ -173,7 +173,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Sofa Collection 3",
     description: "Balanced design with deep seating and supportive back cushions.",
-    price: 68000,
+    price: 150000,
     image: "/products/sofa%20(3).JPG",
   },
   {
@@ -181,7 +181,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Sofa Collection 4",
     description: "Elegant living room set with durable fabric and smooth finishing.",
-    price: 76000,
+    price: 150000,
     image: "/products/sofa%20(4).JPG",
   },
   {
@@ -189,7 +189,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Sofa Collection 5",
     description: "Cozy seating with strong frame and premium foam comfort.",
-    price: 74000,
+    price: 150000,
     image: "/products/sofa%20(5).JPG",
   },
   {
@@ -197,7 +197,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Sofa Collection 6",
     description: "Modern profile with wide seats and a refined look.",
-    price: 71000,
+    price: 150000,
     image: "/products/sofa%20(6).jpg",
   },
   {
@@ -205,7 +205,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Sofa Collection 7",
     description: "Soft-touch upholstery with supportive cushions for daily use.",
-    price: 73000,
+    price: 150000,
     image: "/products/sofa%20(7).jpg",
   },
   {
@@ -213,7 +213,7 @@ const PRODUCTS = [
     category: "Sofas",
     name: "Sofa Collection 8",
     description: "Premium sofa set designed for style and long-lasting comfort.",
-    price: 78000,
+    price: 150000,
     image: "/products/sofa%20(8).jpg",
   },
 

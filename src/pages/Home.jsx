@@ -56,19 +56,19 @@ const CATEGORY_CARDS = [
 const FEATURED_PRODUCTS = [
   {
     name: "Royal L-Shape Sofa",
-    price: "ETB 85,000",
+    price: "ETB 150,000",
     description: "A statement sofa with premium fabric, rich cushioning, and a spacious modern silhouette.",
     image: "/products/sofa%20(7).jpg",
   },
   {
     name: "Classic 3-Seater",
-    price: "ETB 62,000",
+    price: "ETB 150,000",
     description: "Balanced comfort and clean design for living rooms that need timeless elegance.",
     image: "/products/sofa%20(8).jpg",
   },
   {
     name: "Luxury Bedroom Set",
-    price: "ETB 78,000",
+    price: "ETB 85,000",
     description: "Strong structure, refined detailing, and a premium look for restful modern bedrooms.",
     image: "/hero/images/optimized.jpg",
   },
