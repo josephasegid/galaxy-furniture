@@ -3,7 +3,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 
 const PHONE = "0965333435";
 const WHATSAPP = "https://wa.me/251965333435";
-const TELEGRAM = "https://t.me/share/url";
+const TELEGRAM = "tg://resolve?phone=251965333435";
 const CURRENCY = "ETB";
 const PRODUCTS_PER_PAGE = 9;
 
@@ -553,7 +553,7 @@ function getWhatsAppInquiryLink(product) {
 }
 
 function getTelegramInquiryLink(product) {
-  return `${TELEGRAM}?url=${encodeURIComponent("")}&text=${encodeURIComponent(getProductInquiryMessage(product))}`;
+  return `${TELEGRAM}&text=${encodeURIComponent(getProductInquiryMessage(product))}`;
 }
 
 export default function Products({
@@ -562,6 +562,7 @@ export default function Products({
   description,
 }) {
   const { t } = useLanguage();
+  const cartSectionRef = useRef(null);
   // Filters
   const categories = useMemo(() => uniqCategories(PRODUCTS), []);
   const [category, setCategory] = useState(initialCategory);
@@ -661,7 +662,7 @@ export default function Products({
 
     pushToast({
       title: "Added to cart",
-      message: `${product.name} • ${formatMoney(product.price)}`,
+      message: `${product.name} added to your cart request.`, 
     });
   };
 
@@ -685,13 +686,14 @@ export default function Products({
     }));
   };
 
-  const orderText = encodeURIComponent(
-    `Hello Galaxy Furniture, I want to order:\n` +
+  const orderMessage =
+    `Hello Galaxy Furniture, I want to ask about these products:\n` +
       (cart.length
-        ? cart.map((x) => `- ${x.name} x${x.qty} (${formatMoney(x.price)})`).join("\n")
+        ? cart.map((x) => `- ${x.name} x${x.qty}`).join("\n")
         : "- (No items yet)") +
-      `\nTotal: ${formatMoney(cartTotal)}\nPhone: ${PHONE}`
-  );
+      `\nPlease send me the prices and availability.\nPhone: ${PHONE}`;
+  const orderText = encodeURIComponent(orderMessage);
+  const telegramOrderLink = `${TELEGRAM}&text=${encodeURIComponent(orderMessage)}`;
 
   return (
     <div className="grid" style={{ gap: 18, marginTop: 8 }}>
@@ -742,6 +744,14 @@ export default function Products({
             >
               {cartCount}
             </span>
+            <button
+              className="btn ghost"
+              type="button"
+              onClick={() => cartSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              style={{ borderRadius: 999, marginLeft: 8, padding: "8px 12px" }}
+            >
+              Open Cart
+            </button>
           </div>
         </div>
 
@@ -820,11 +830,11 @@ export default function Products({
       )}
 
       {/* Cart summary */}
-      <section className="card" style={{ padding: 22 }}>
+      <section ref={cartSectionRef} className="card" style={{ padding: 22 }}>
         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
           <div>
             <h2 className="h2" style={{ marginBottom: 6 }}>{t("cart_summary")}</h2>
-            <p className="p">{t("cart_demo")}</p>
+            <p className="p">Review your selected products and send the list to sales on WhatsApp or Telegram.</p>
           </div>
 
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -839,6 +849,15 @@ export default function Products({
               style={{ borderRadius: 999 }}
             >
               {t("send_order_whatsapp")}
+            </a>
+            <a
+              className="btn ghost"
+              href={telegramOrderLink}
+              target="_blank"
+              rel="noreferrer"
+              style={{ borderRadius: 999 }}
+            >
+              Send on Telegram
             </a>
           </div>
         </div>
@@ -857,12 +876,12 @@ export default function Products({
               >
                 <div style={{ display: "grid", gap: 2 }}>
                   <strong>{x.name}</strong>
-                  <span className="small">
+                  <span className="small">Quantity: {x.qty}</span>
+                  <span className="small cart-price-hidden" style={{ display: "none" }}>
                     {formatMoney(x.price)} × {x.qty}
                   </span>
                 </div>
                 <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                  <span style={{ fontWeight: 900 }}>{formatMoney(x.price * x.qty)}</span>
                   <button className="btn ghost" onClick={() => removeOne(x.id)} style={{ borderRadius: 999 }}>
                     Remove 1
                   </button>
@@ -870,7 +889,7 @@ export default function Products({
               </div>
             ))}
 
-            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 6 }}>
+            <div className="cart-total-hidden" style={{ display: "none", justifyContent: "flex-end", marginTop: 6 }}>
               <div className="chip" style={{ borderColor: "rgba(255,215,0,.30)" }}>
                 <span className="small">{t("total")}</span>
                 <strong style={{ marginLeft: 10, color: "#FFD700" }}>{formatMoney(cartTotal)}</strong>
@@ -879,21 +898,29 @@ export default function Products({
 
             <div className="chip" style={{ justifyContent: "space-between", alignItems: "center", gap: 12 }}>
               <div>
-                <strong>{t("bank_transfer_checkout")}</strong>
-                <div className="small">{t("send_receipt")}</div>
+                <strong>Send your request to sales</strong>
+                <div className="small">We will reply with prices, delivery, and availability details.</div>
               </div>
-              <button
-                className="btn ghost"
-                onClick={() =>
-                  pushToast({
-                    title: t("bank_transfer"),
-                    message: t("send_receipt"),
-                  })
-                }
-                style={{ borderRadius: 999 }}
-              >
-                {t("bank_transfer")}
-              </button>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <a
+                  className="btn primary"
+                  href={`${WHATSAPP}?text=${orderText}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ borderRadius: 999 }}
+                >
+                  WhatsApp Sales
+                </a>
+                <a
+                  className="btn ghost"
+                  href={telegramOrderLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ borderRadius: 999 }}
+                >
+                  Telegram Sales
+                </a>
+              </div>
             </div>
           </div>
         )}
