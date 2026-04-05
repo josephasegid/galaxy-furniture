@@ -1,23 +1,23 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CATEGORY_LINKS } from "../data/categories.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const PHONE = "0965333435";
-const WHATSAPP = "https://wa.me/251965333435"; // Ethiopia: 251 + 965333435
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/products", label: "Shop" },
-  ...CATEGORY_LINKS,
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-];
+const WHATSAPP = "https://wa.me/251965333435";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { t, language, toggleLanguage } = useLanguage();
 
-  // Close menu on route link click handled in onClick
-  // Close on outside click/touch
+  const links = [
+    { to: "/", label: t("home") },
+    { to: "/products", label: t("shop") },
+    ...CATEGORY_LINKS,
+    { to: "/about", label: t("about") },
+    { to: "/contact", label: t("contact") },
+  ];
+
   useEffect(() => {
     function onDown(e) {
       if (!open) return;
@@ -35,7 +35,6 @@ export default function Navbar() {
     };
   }, [open]);
 
-  // Close on escape
   useEffect(() => {
     function onKey(e) {
       if (e.key === "Escape") setOpen(false);
@@ -46,15 +45,12 @@ export default function Navbar() {
 
   return (
     <header className="nav-root">
-      {/* TOP STRIP (optional) */}
       <div className="nav-topbar">
         <div className="container nav-topbar-inner" />
       </div>
 
-      {/* MAIN NAV */}
       <div className="nav-main">
         <div className="container nav-main-inner">
-          {/* Brand */}
           <NavLink
             to="/"
             onClick={() => setOpen(false)}
@@ -64,11 +60,10 @@ export default function Navbar() {
             <img className="nav-logo" src="/brand/logo.png" alt="Galaxy Furniture Logo" />
             <div className="nav-brand-text">
               <div className="nav-title">GALAXY FURNITURE</div>
-              <div className="nav-subtitle">Premium Furniture | Addis Ababa</div>
+              <div className="nav-subtitle">{t("brand_subtitle")}</div>
             </div>
           </NavLink>
 
-          {/* Desktop links */}
           <nav className="nav-desktop" aria-label="Primary navigation">
             {links.map((l) => (
               <NavLink
@@ -81,30 +76,30 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right actions (desktop) */}
           <div className="nav-actions">
+            <button type="button" className="pill lang-pill" onClick={toggleLanguage}>
+              {language === "en" ? "አማ" : "EN"}
+            </button>
             <a className="pill" href={`tel:${PHONE}`}>
-              Call
+              {t("call")}
             </a>
             <a className="pill gold" href={WHATSAPP} target="_blank" rel="noreferrer">
-              WhatsApp
+              {t("whatsapp")}
             </a>
 
-            {/* Mobile toggle */}
             <button
               type="button"
-              aria-label={open ? "Close menu" : "Open menu"}
+              aria-label={open ? t("close_menu") : t("open_menu")}
               aria-expanded={open}
               aria-controls="nav-mobile-panel"
               onClick={() => setOpen((v) => !v)}
               className="nav-mobile-btn"
             >
-              <span className="nav-icon">{open ? "Close" : "Menu"}</span>
+              <span className="nav-icon">{open ? t("close") : t("menu")}</span>
             </button>
           </div>
         </div>
 
-        {/* Mobile panel (smooth height + fade) */}
         <div
           id="nav-mobile-panel"
           className={`nav-mobile-panel ${open ? "open" : ""}`}
@@ -126,26 +121,26 @@ export default function Navbar() {
             </div>
 
             <div className="nav-mobile-cta">
+              <button type="button" className="btn ghost" onClick={toggleLanguage} style={{ width: "100%" }}>
+                {language === "en" ? "Switch to Amharic" : "Switch to English"}
+              </button>
               <a className="btn primary" href={`tel:${PHONE}`} style={{ width: "100%" }}>
-                Call Now
+                {t("call_now")}
               </a>
               <a className="btn" href={WHATSAPP} target="_blank" rel="noreferrer" style={{ width: "100%" }}>
-                WhatsApp
+                {t("whatsapp")}
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* CSS (navbar only) */}
       <style>{`
         .nav-root{
           position: sticky;
           top: 0;
           z-index: 60;
         }
-
-        /* Topbar */
         .nav-topbar{
           background: rgba(0,0,0,.28);
           border-bottom: 1px solid rgba(184,199,221,.12);
@@ -161,29 +156,6 @@ export default function Navbar() {
           max-width: 100%;
           margin: 0 auto;
         }
-        .nav-topbar-text{
-          display:flex;
-          align-items:center;
-          gap:10px;
-          font-weight: 800;
-          font-size: 13px;
-          color: rgba(235,242,255,.85);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          min-width: 0;
-        }
-        .dot{
-          width:10px; height:10px; border-radius:999px;
-          background: rgba(255,215,0,.95);
-          box-shadow: 0 0 0 4px rgba(255,215,0,.12);
-          flex: 0 0 auto;
-        }
-        .nav-topbar-actions{
-          display:flex; gap:10px; flex: 0 0 auto;
-        }
-
-        /* Main */
         .nav-main{
           background: rgba(10, 25, 47, .94);
           border-bottom: 1px solid rgba(184,199,221,.14);
@@ -242,7 +214,6 @@ export default function Navbar() {
           text-overflow: ellipsis;
           max-width: 52vw;
         }
-
         .nav-desktop{
           display:flex;
           gap:6px;
@@ -268,14 +239,12 @@ export default function Navbar() {
           border-color: rgba(255,215,0,.45);
           background: rgba(255,215,0,.10);
         }
-
         .nav-actions{
           display:flex;
           align-items:center;
           gap:10px;
           flex: 0 0 auto;
         }
-
         .pill{
           display:inline-flex;
           align-items:center;
@@ -293,8 +262,9 @@ export default function Navbar() {
           background: rgba(255,215,0,.14);
           border-color: rgba(255,215,0,.35);
         }
-
-        /* Mobile button */
+        .lang-pill{
+          cursor: pointer;
+        }
         .nav-mobile-btn{
           display:none;
           border-radius: 14px;
@@ -320,8 +290,6 @@ export default function Navbar() {
           outline: 2px solid rgba(255,215,0,.65);
           outline-offset: 2px;
         }
-
-        /* Mobile panel: height animation */
         .nav-mobile-panel{
           display:none;
           overflow: hidden;
@@ -372,24 +340,11 @@ export default function Navbar() {
           display:grid;
           gap: 10px;
         }
-
-        /* Responsive rules */
         @media (max-width: 820px){
           .nav-desktop{ display:none !important; }
           .nav-mobile-btn{ display:inline-flex !important; align-items:center; justify-content:center; }
           .nav-mobile-panel{ display:block !important; }
-          .nav-actions .pill{ display:none !important; }
-
-          /* make topbar actions smaller on mobile */
-          .nav-topbar-actions .pill{
-            padding: 9px 12px;
-            font-size: 13px;
-          }
-        }
-
-        @media (max-width: 520px){
-          /* Hide topbar text if it overflows too much */
-          .nav-topbar-text{ display:none; }
+          .nav-actions .pill:not(.lang-pill){ display:none !important; }
         }
       `}</style>
     </header>

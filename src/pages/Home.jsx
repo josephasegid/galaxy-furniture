@@ -173,6 +173,49 @@ const SOCIAL_LINKS = [
   { label: "Telegram", href: "https://t.me/Galaxy_furniture" },
 ];
 
+const FAQS = [
+  {
+    question: "Do you make custom furniture orders?",
+    answer:
+      "Yes. We make custom sofas, beds, dining sets, wardrobes, and other furniture based on your size, color, and finishing needs.",
+  },
+  {
+    question: "Can I choose the color and material?",
+    answer:
+      "Yes. Many products can be ordered in different colors, fabrics, and finishing styles to match your home, office, or showroom.",
+  },
+  {
+    question: "How can I ask for the price?",
+    answer:
+      "You can request the price from the product page, call us directly, or send the product name or photo on WhatsApp or Telegram.",
+  },
+  {
+    question: "Do you deliver furniture?",
+    answer:
+      "Yes. Delivery is available. The delivery cost depends on the product size, quantity, and location, so we confirm the exact amount when you order.",
+  },
+  {
+    question: "Can I visit the showroom before ordering?",
+    answer:
+      "Yes. You can visit any of our showrooms to check the comfort, finishing, size, and overall quality before you place an order.",
+  },
+  {
+    question: "How long do custom orders take?",
+    answer:
+      "The production time depends on the design and quantity. Ready-made items may be available immediately, while custom furniture needs workshop time.",
+  },
+  {
+    question: "Do you make office and business furniture?",
+    answer:
+      "Yes. We supply furniture for homes, offices, waiting areas, showrooms, and other business spaces.",
+  },
+  {
+    question: "What materials do you use?",
+    answer:
+      "We focus on durable structure, quality wood, strong foam, clean upholstery, and polished finishing for a premium long-lasting result.",
+  },
+];
+
 export default function Home() {
   const hero = useReveal();
   const story = useReveal();
@@ -182,6 +225,7 @@ export default function Home() {
   const reasons = useReveal();
   const highlight = useReveal();
   const trust = useReveal();
+  const faq = useReveal();
   const contact = useReveal();
   const [activeSlide, setActiveSlide] = useState(0);
   const showroomSlide = SHOWROOM_SLIDES[activeSlide];
@@ -558,6 +602,34 @@ export default function Home() {
         <div className="grid cols-3" style={{ gap: 16, marginTop: 18 }}>
           {TESTIMONIALS.map((item) => (
             <TestimonialCard key={item.name + item.note} item={item} />
+          ))}
+        </div>
+      </section>
+
+      <section ref={faq} className="reveal">
+        <SectionHeader
+          badge="Frequently Asked Questions"
+          title="Basic answers for common customer questions"
+          description="These are the questions customers usually ask before ordering furniture, visiting the showroom, or requesting delivery."
+        />
+
+        <div className="grid cols-2" style={{ gap: 16, alignItems: "stretch" }}>
+          {FAQS.map((item) => (
+            <div key={item.question} className="card hover-lift" style={{ padding: 20 }}>
+              <h3
+                style={{
+                  margin: 0,
+                  fontSize: 18,
+                  fontWeight: 900,
+                  color: "rgba(234,242,255,.98)",
+                }}
+              >
+                {item.question}
+              </h3>
+              <p className="p" style={{ marginTop: 10 }}>
+                {item.answer}
+              </p>
+            </div>
           ))}
         </div>
       </section>

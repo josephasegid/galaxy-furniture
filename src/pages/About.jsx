@@ -1,32 +1,33 @@
+import { useLanguage } from "../context/LanguageContext.jsx";
+
 export default function About() {
+  const { t } = useLanguage();
+
   return (
     <div className="grid" style={{ gap: 18 }}>
       <section className="card" style={{ padding: 22 }}>
-        <span className="badge">About Galaxy Furniture</span>
-        <h1 className="h1">Craftsmanship you can trust</h1>
-        <p className="p">
-          Galaxy Furniture is a furniture manufacturing and sales company with <strong>three branches</strong> and
-          <strong> one central workshop</strong>. We focus on comfort, durability, and modern design.
-        </p>
+        <span className="badge">{t("about_badge")}</span>
+        <h1 className="h1">{t("about_heading")}</h1>
+        <p className="p">{t("about_body")}</p>
 
         <hr className="hr" />
 
         <div className="grid cols-2">
-          <Info title="Owner" value="Seid Mohamed Taye" />
-          <Info title="Phone" value="0965333435" />
-          <Info title="Branches" value="3" />
-          <Info title="Workshop" value="1" />
+          <Info title={t("owner")} value="Seid Mohamed Taye" />
+          <Info title={t("phone")} value="0965333435" />
+          <Info title={t("branches")} value="3" />
+          <Info title={t("workshop")} value="1" />
         </div>
       </section>
 
       <section className="grid cols-2">
         <div className="card" style={{ padding: 22 }}>
-          <h2 className="h2">Vision</h2>
-          <p className="p">To become the most trusted furniture brand in Ethiopia through quality and innovation.</p>
+          <h2 className="h2">{t("vision")}</h2>
+          <p className="p">{t("vision_body")}</p>
         </div>
         <div className="card" style={{ padding: 22 }}>
-          <h2 className="h2">Mission</h2>
-          <p className="p">To deliver beautiful, durable furniture with strong customer service and fair pricing.</p>
+          <h2 className="h2">{t("mission")}</h2>
+          <p className="p">{t("mission_body")}</p>
         </div>
       </section>
     </div>

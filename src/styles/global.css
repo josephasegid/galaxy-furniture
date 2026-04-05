@@ -47,6 +47,57 @@ button, input, textarea{ font-family:inherit; }
   padding: 0 0 56px;
 }
 
+.app-loader{
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top, rgba(255,215,0,.12), transparent 35%),
+    rgba(10,25,47,.96);
+  backdrop-filter: blur(12px);
+}
+
+.app-loader-card{
+  width: min(420px, 92vw);
+  padding: 28px 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,215,0,.24);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  box-shadow: 0 24px 70px rgba(0,0,0,.42);
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.app-loader-logo{
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid rgba(255,215,0,.4);
+  box-shadow: 0 0 0 8px rgba(255,215,0,.08);
+}
+
+.app-loader-ring{
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 3px solid rgba(184,199,221,.18);
+  border-top-color: var(--gold);
+  animation: loaderSpin .85s linear infinite;
+}
+
+.app-loader-text{
+  font-size: 14px;
+  color: rgba(234,242,255,.86);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
 .hr{
   height:1px;
   background: rgba(184,199,221,.14);
@@ -233,6 +284,11 @@ button, input, textarea{ font-family:inherit; }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes loaderSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes floatSoft {

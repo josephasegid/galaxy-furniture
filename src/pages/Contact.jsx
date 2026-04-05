@@ -1,3 +1,5 @@
+import { useLanguage } from "../context/LanguageContext.jsx";
+
 const SOCIAL_LINKS = [
   { label: "TikTok", href: "https://www.tiktok.com/@galaxyfurniture4?_r=1&_t=ZS-9534VLbGl1h", icon: "tiktok" },
   { label: "Facebook", href: "https://www.facebook.com/share/1E4SqiYmMn/", icon: "facebook" },
@@ -6,36 +8,35 @@ const SOCIAL_LINKS = [
 ];
 
 export default function Contact() {
+  const { t } = useLanguage();
+
   return (
     <div className="grid cols-2" style={{ alignItems: "start" }}>
       <section className="card" style={{ padding: 22 }}>
-        <span className="badge">Contact</span>
-        <h1 className="h1">Let’s talk about your furniture</h1>
-        <p className="p">Call us, visit our branches, or send a message. We respond fast.</p>
+        <span className="badge">{t("contact_title")}</span>
+        <h1 className="h1">{t("contact_heading")}</h1>
+        <p className="p">{t("contact_body")}</p>
 
         <hr className="hr" />
 
         <div className="grid" style={{ gap: 12 }}>
-          <ContactRow label="Phone" value="0965333435" />
-          <ContactRow label="Owner" value="Seid Mohamed Taye" />
-          <a className="btn primary" href="tel:0965333435">Call Now</a>
+          <ContactRow label={t("phone")} value="0965333435" />
+          <ContactRow label={t("owner")} value="Seid Mohamed Taye" />
+          <a className="btn primary" href="tel:0965333435">{t("call_now")}</a>
           <a
             className="btn"
             href="https://wa.me/251965333435?text=Hello%20Galaxy%20Furniture%2C%20I%20want%20to%20ask%20about%20furniture."
             target="_blank"
             rel="noreferrer"
           >
-            WhatsApp Message
+            {t("whatsapp_message")}
           </a>
 
           <div style={{ marginTop: 8 }}>
-            <div style={{ fontSize: 13, color: "rgba(184,199,221,.9)", marginBottom: 8 }}>Social media</div>
+            <div style={{ fontSize: 13, color: "rgba(184,199,221,.9)", marginBottom: 8 }}>{t("social_media")}</div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               {SOCIAL_LINKS.map((social) => (
-                <SocialLink
-                  key={social.label}
-                  social={social}
-                />
+                <SocialLink key={social.label} social={social} />
               ))}
             </div>
           </div>
@@ -43,20 +44,20 @@ export default function Contact() {
       </section>
 
       <section className="card" style={{ padding: 22 }}>
-        <h2 className="h2">Send a request</h2>
-        <p className="p">Demo form (front-end). If you want it to send email, tell me and I’ll add it.</p>
+        <h2 className="h2">{t("send_request")}</h2>
+        <p className="p">{t("demo_form")}</p>
 
         <form onSubmit={(e) => e.preventDefault()} style={{ marginTop: 14, display: "grid", gap: 12 }}>
-          <Input label="Full Name" placeholder="Your name" />
-          <Input label="Phone Number" placeholder="09..." />
-          <Input label="What do you need?" placeholder="Sofa / Bed / Custom order..." />
+          <Input label={t("full_name")} placeholder={t("your_name")} />
+          <Input label={t("phone_number")} placeholder="09..." />
+          <Input label={t("what_do_you_need")} placeholder={t("custom_order_placeholder")} />
 
           <label style={{ display: "grid", gap: 6 }}>
-            <span style={{ fontSize: 13, color: "rgba(184,199,221,.95)" }}>Message</span>
-            <textarea rows="5" placeholder="Write your message..." style={fieldStyle} />
+            <span style={{ fontSize: 13, color: "rgba(184,199,221,.95)" }}>{t("message")}</span>
+            <textarea rows="5" placeholder={t("write_message")} style={fieldStyle} />
           </label>
 
-          <button className="btn primary" type="submit">Submit (demo)</button>
+          <button className="btn primary" type="submit">{t("submit_demo")}</button>
         </form>
       </section>
     </div>

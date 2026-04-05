@@ -1,3 +1,5 @@
+import { useLanguage } from "../context/LanguageContext.jsx";
+
 const PHONE = "0965333435";
 const WHATSAPP = "https://wa.me/251965333435";
 const SOCIAL_LINKS = [
@@ -8,25 +10,14 @@ const SOCIAL_LINKS = [
 ];
 
 const branches = [
-  {
-    name: "Semit 72",
-    address: "In front of Getas Real Estate",
-    phones: ["0967333435"],
-  },
-  {
-    name: "Figa",
-    address: "Around traffic light",
-    phones: ["0965333435", "0964333435"],
-  },
-  {
-    name: "Goro",
-    address: "In front of Sunrise Real Estate",
-    phones: ["0966333435"],
-  },
+  { name: "Semit 72", address: "In front of Getas Real Estate", phones: ["0967333435"] },
+  { name: "Figa", address: "Around traffic light", phones: ["0965333435", "0964333435"] },
+  { name: "Goro", address: "In front of Sunrise Real Estate", phones: ["0966333435"] },
 ];
 
 export default function Footer() {
   const chipBaseStyle = { height: "100%", alignSelf: "stretch" };
+  const { t } = useLanguage();
 
   return (
     <footer
@@ -38,10 +29,7 @@ export default function Footer() {
     >
       <div className="container" style={{ padding: "22px 0" }}>
         <div className="grid cols-3" style={{ alignItems: "stretch", gap: 16 }}>
-          <div
-            className="chip"
-            style={{ ...chipBaseStyle, display: "flex", gap: 12, alignItems: "center" }}
-          >
+          <div className="chip" style={{ ...chipBaseStyle, display: "flex", gap: 12, alignItems: "center" }}>
             <img
               src="/brand/logo.png"
               alt="Galaxy Furniture"
@@ -55,16 +43,16 @@ export default function Footer() {
             />
             <div>
               <div style={{ fontWeight: 950 }}>Galaxy Furniture</div>
-              <div className="small">Gold & Navy quality furniture.</div>
+              <div className="small">{t("footer_tagline")}</div>
             </div>
           </div>
 
           <div className="chip" style={{ ...chipBaseStyle, display: "flex", flexDirection: "column" }}>
-            <div style={{ fontWeight: 900 }}>Branches</div>
+            <div style={{ fontWeight: 900 }}>{t("branches")}</div>
             <div className="small" style={{ marginTop: 6 }}>
               {branches.map((branch) => (
                 <div key={branch.name} style={{ marginBottom: 8 }}>
-                  <div style={{ fontWeight: 800 }}>{branch.name} Branch</div>
+                  <div style={{ fontWeight: 800 }}>{branch.name} {t("branch_suffix")}</div>
                   <div>{branch.address}</div>
                 </div>
               ))}
@@ -72,21 +60,21 @@ export default function Footer() {
           </div>
 
           <div className="chip" style={{ ...chipBaseStyle, display: "flex", flexDirection: "column" }}>
-            <div style={{ fontWeight: 900 }}>Contact</div>
+            <div style={{ fontWeight: 900 }}>{t("contact_title")}</div>
             <div className="small" style={{ marginTop: 6 }}>
-              Main:{" "}
+              {t("main")}:{" "}
               <a href={`tel:${PHONE}`} style={{ color: "#FFD700", fontWeight: 900 }}>
                 {PHONE}
               </a>
               <br />
-              WhatsApp:{" "}
+              {t("whatsapp")}:{" "}
               <a href={WHATSAPP} target="_blank" rel="noreferrer" style={{ color: "#FFD700", fontWeight: 900 }}>
-                Chat with us
+                {t("chat_with_us")}
               </a>
               <div style={{ marginTop: 8 }}>
                 {branches.map((branch) => (
                   <div key={`${branch.name}-phones`} style={{ marginBottom: 6 }}>
-                    <div style={{ fontWeight: 800 }}>{branch.name} phones</div>
+                    <div style={{ fontWeight: 800 }}>{branch.name} {t("branch_phones")}</div>
                     <div>
                       {branch.phones.map((p, idx) => (
                         <span key={p}>
@@ -102,13 +90,10 @@ export default function Footer() {
               </div>
 
               <div style={{ marginTop: 10 }}>
-                <div style={{ fontWeight: 800, marginBottom: 6 }}>Follow us</div>
+                <div style={{ fontWeight: 800, marginBottom: 6 }}>{t("follow_us")}</div>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                   {SOCIAL_LINKS.map((social) => (
-                    <SocialLink
-                      key={social.label}
-                      social={social}
-                    />
+                    <SocialLink key={social.label} social={social} />
                   ))}
                 </div>
               </div>
@@ -119,7 +104,7 @@ export default function Footer() {
         <hr className="hr" />
 
         <div className="small" style={{ textAlign: "center", color: "rgba(184,199,221,.92)" }}>
-          (c) {new Date().getFullYear()} Galaxy Furniture. All rights reserved. Built in Addis Ababa.
+          (c) {new Date().getFullYear()} Galaxy Furniture. {t("rights")}
         </div>
       </div>
     </footer>
