@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
+import Seo from "./components/Seo.jsx";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Products from "./pages/Products.jsx";
@@ -47,6 +48,7 @@ function AppShell() {
 
   return (
     <div className="app">
+      <Seo />
       {loading && (
         <div className="app-loader" role="status" aria-live="polite" aria-label="Loading website">
           <div className="app-loader-card">

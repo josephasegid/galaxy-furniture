@@ -11,21 +11,21 @@ function createEmbedSrc(mapLink) {
 const BRANCHES = [
   {
     name: "Showroom 1 - Semit 72",
-    desc: "Galaxy Furniture showroom at Semit 72 area.",
+    desc: "Galaxy Furniture showroom at Semit 72 area for customers searching for Addis Ababa furniture with easy map access.",
     hours: "Mon-Sat: 8:30-7:00",
     mapLink: SHOWROOM_LINKS.showroom1,
     embedSrc: createEmbedSrc(SHOWROOM_LINKS.showroom1),
   },
   {
     name: "Showroom 2 - Figa",
-    desc: "Galaxy Furniture showroom at Figa area.",
+    desc: "Galaxy Furniture showroom at Figa area serving customers looking for nearby sofas, bedroom sets, and modern furniture.",
     hours: "Mon-Sat: 8:30-7:00",
     mapLink: SHOWROOM_LINKS.showroom2,
     embedSrc: createEmbedSrc(SHOWROOM_LINKS.showroom2),
   },
   {
     name: "Showroom 3 - Goro",
-    desc: "Galaxy Furniture showroom at Goro area.",
+    desc: "Galaxy Furniture Showroom No 3 at Goro, convenient for customers searching for Galaxy Furniture near Bole, Addis Ababa.",
     hours: "Mon-Sat: 8:30-7:00",
     mapLink: SHOWROOM_LINKS.showroom3,
     embedSrc: createEmbedSrc(SHOWROOM_LINKS.showroom3),
@@ -39,7 +39,8 @@ export default function Branches() {
         <span className="badge">Branches</span>
         <h1 className="h1">Visit our showrooms</h1>
         <p className="p">
-          Galaxy Furniture has three showrooms across Addis Ababa to serve you better.
+          Galaxy Furniture has three showrooms across Addis Ababa to serve you better, including
+          Showroom No 3 in Goro for customers searching for Galaxy Furniture near me or near Bole.
         </p>
       </section>
 
@@ -143,7 +144,8 @@ export default function Branches() {
       <section className="card reveal" style={{ padding: 22 }}>
         <h2 className="h2">Workshop</h2>
         <p className="p">
-          Our central workshop produces custom and standard furniture with high-quality craftsmanship.
+          Our central workshop produces custom and standard furniture with high-quality
+          craftsmanship for sofas, bedroom sets, and other Ethiopian furniture collections.
         </p>
       </section>
     </div>

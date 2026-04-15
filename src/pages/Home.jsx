@@ -13,7 +13,7 @@ const CATEGORY_CARDS = [
     title: "Sofas",
     to: "/sofas",
     description: "Premium seating for modern living rooms, family spaces, and elegant interiors.",
-    image: "/products/sofa%20(1).jpg",
+    image: "/products/sofa%20(1).webp",
   },
   {
     title: "Beds",
@@ -25,31 +25,31 @@ const CATEGORY_CARDS = [
     title: "Dining Tables",
     to: "/dining",
     description: "Stylish dining sets made for everyday family use and memorable gatherings.",
-    image: "/products/sofa%20(2).JPG",
+    image: "/products/sofa%20(2).webp",
   },
   {
     title: "Coffee Tables",
     to: "/products",
     description: "Compact accent pieces that complete living spaces with practicality and style.",
-    image: "/products/sofa%20(3).JPG",
+    image: "/products/sofa%20(3).webp",
   },
   {
     title: "TV Stands",
     to: "/storage",
     description: "Functional media units with a polished look, smart storage, and durable build quality.",
-    image: "/products/sofa%20(4).JPG",
+    image: "/products/sofa%20(4).webp",
   },
   {
     title: "Wardrobes",
     to: "/storage",
     description: "Modern storage solutions designed to organize bedrooms beautifully.",
-    image: "/products/sofa%20(5).JPG",
+    image: "/products/sofa%20(5).webp",
   },
   {
     title: "Office Furniture",
     to: "/office",
     description: "Professional desks and work furniture built for productivity and presentation.",
-    image: "/products/sofa%20(6).jpg",
+    image: "/products/sofa%20(6).webp",
   },
 ];
 
@@ -58,13 +58,13 @@ const FEATURED_PRODUCTS = [
     name: "Royal L-Shape Sofa",
     price: "ETB 150,000",
     description: "A statement sofa with premium fabric, rich cushioning, and a spacious modern silhouette.",
-    image: "/products/sofa%20(7).jpg",
+    image: "/products/sofa%20(7).webp",
   },
   {
     name: "Classic 3-Seater",
     price: "ETB 150,000",
     description: "Balanced comfort and clean design for living rooms that need timeless elegance.",
-    image: "/products/sofa%20(8).jpg",
+    image: "/products/sofa%20(8).webp",
   },
   {
     name: "Luxury Bedroom Set",
@@ -124,7 +124,7 @@ const SHOWROOM_SLIDES = [
     title: "Best sellers that define the living room",
     description:
       "Our best-selling pieces combine strong presence, deep comfort, and premium finishing for homes that want warmth and elegance.",
-    image: "/products/sofa%20(5).JPG",
+    image: "/products/sofa%20(5).webp",
     imageAlt: "Galaxy Furniture best seller collection",
     lines: [
       { label: "Best sellers", text: "Popular living room designs selected for comfort and visual impact." },
@@ -139,7 +139,7 @@ const SHOWROOM_SLIDES = [
     title: "Fresh arrivals for a more refined home",
     description:
       "New arrivals introduce updated silhouettes, modern proportions, and elegant styling for customers who want something current and distinctive.",
-    image: "/products/sofa%20(7).jpg",
+    image: "/products/sofa%20(7).webp",
     imageAlt: "Galaxy Furniture new arrival sofa",
     lines: [
       { label: "New arrivals", text: "Fresh looks for customers who want current styling and premium details." },
@@ -154,7 +154,7 @@ const SHOWROOM_SLIDES = [
     title: "Statement pieces for elegant interiors",
     description:
       "Special collections help transform a room with richer textures, warm tones, and furniture selected to create a premium showroom feel at home.",
-    image: "/products/sofa%20(8).jpg",
+    image: "/products/sofa%20(8).webp",
     imageAlt: "Galaxy Furniture special collection sofa",
     lines: [
       { label: "Special collection", text: "Pieces that elevate modern homes with warm tones and refined finishing." },
@@ -187,7 +187,7 @@ const FAQS = [
   {
     question: "How can I ask for the price?",
     answer:
-      "You can request the price from the product page, call us directly, or send the product name or photo on WhatsApp or Telegram.",
+      "You can request the price from the product page, call us directly, or send the product name or photo on WhatsApp or Telegram. This makes it easy for customers searching for furniture in Ethiopia price information.",
   },
   {
     question: "Do you deliver furniture?",
@@ -198,6 +198,16 @@ const FAQS = [
     question: "Can I visit the showroom before ordering?",
     answer:
       "Yes. You can visit any of our showrooms to check the comfort, finishing, size, and overall quality before you place an order.",
+  },
+  {
+    question: "Where can I find Galaxy Furniture near Bole, Addis Ababa?",
+    answer:
+      "Customers looking for Galaxy Furniture near Bole, Addis Ababa can use our branches page to choose the nearest showroom in Semit 72, Figa, or Goro and open the map directly.",
+  },
+  {
+    question: "Do you have Galaxy Furniture sofas and bedroom sets?",
+    answer:
+      "Yes. Our collection includes Galaxy Furniture sofas, beds, and bedroom sets, along with dining tables, wardrobes, TV stands, and office furniture.",
   },
   {
     question: "How long do custom orders take?",
@@ -318,9 +328,10 @@ export default function Home() {
                     color: "rgba(234,242,255,.9)",
                   }}
                 >
-                  Discover sofas, beds, dining sets, wardrobes, and office furniture that blend
-                  comfort, style, and long-term quality. Galaxy Furniture creates spaces that feel
-                  warm, refined, and ready for everyday life.
+                  Discover sofas, bedroom sets, beds, dining sets, wardrobes, and office furniture
+                  that blend comfort, style, and long-term quality. Galaxy Furniture is an Addis
+                  Ababa furniture showroom serving customers who want refined Ethiopian furniture
+                  for everyday living.
                 </p>
               </div>
 
@@ -375,7 +386,7 @@ export default function Home() {
                 }}
               >
                 <img
-                  src="/products/sofa%20(1).jpg"
+                  src="/products/sofa%20(1).webp"
                   alt="Luxury sofa collection"
                   style={{ width: "100%", height: "100%", minHeight: 280, objectFit: "cover", display: "block" }}
                 />
@@ -390,12 +401,12 @@ export default function Home() {
 
               <div className="grid cols-2" style={{ gap: 14 }}>
                 <ImageTile
-                  src="/products/sofa%20(6).jpg"
+                  src="/products/sofa%20(6).webp"
                   title="Custom colors"
                   note="Personalize the look"
                 />
                 <ImageTile
-                  src="/products/sofa%20(8).jpg"
+                  src="/products/sofa%20(8).webp"
                   title="Refined finishing"
                   note="Built for modern interiors"
                 />
@@ -409,7 +420,7 @@ export default function Home() {
         <div className="grid cols-2" style={{ alignItems: "stretch", gap: 18 }}>
           <div className="card glow hover-lift" style={{ padding: 0, minHeight: 420 }}>
             <img
-              src="/products/sofa%20(2).JPG"
+              src="/products/sofa%20(2).webp"
               alt="Galaxy Furniture interior collection"
               style={{ width: "100%", height: "100%", minHeight: 420, objectFit: "cover", display: "block" }}
             />
@@ -424,7 +435,7 @@ export default function Home() {
               A premium showroom should do more than display furniture. It should help customers
               imagine how comfort, proportion, and style will come together in their own space.
               That is why our collections are presented with strong visual balance, practical
-              details, and clear guidance for real homes and offices.
+              details, and clear guidance for real homes and offices across Addis Ababa.
             </p>
             <div style={{ display: "grid", gap: 12 }}>
               <Bullet text="Living room, bedroom, dining, and office collections in one trusted brand." />
@@ -462,7 +473,7 @@ export default function Home() {
         <SectionHeader
           badge="Featured Products"
           title="Showroom favorites"
-          description="A curated preview of pieces customers love for comfort, impact, and clean modern styling."
+          description="A curated preview of Addis Ababa furniture customers love for comfort, impact, clean modern styling, and strong value."
         />
 
         <div className="grid cols-3" style={{ gap: 18 }}>
@@ -483,7 +494,7 @@ export default function Home() {
               We serve customers who want furniture that looks impressive and performs well every
               day. From family living rooms to bedrooms, dining areas, and office setups, our team
               focuses on strong materials, thoughtful design, and helpful customer care from the
-              first conversation to final delivery.
+              first conversation to final delivery, with collections that reflect modern Ethiopian furniture needs.
             </p>
             <div className="grid cols-2" style={{ gap: 12 }}>
               <StatCard title="Branches" value="3" note="Serving customers through accessible showroom locations." />
@@ -493,7 +504,7 @@ export default function Home() {
 
           <div className="card glow hover-lift" style={{ padding: 0, minHeight: 420 }}>
             <img
-              src="/products/sofa%20(4).JPG"
+              src="/products/sofa%20(4).webp"
               alt="Premium furniture showroom display"
               style={{ width: "100%", height: "100%", minHeight: 420, objectFit: "cover", display: "block" }}
             />
@@ -650,7 +661,9 @@ export default function Home() {
               </h2>
               <p className="p" style={{ color: "rgba(234,242,255,.88)" }}>
                 Visit our branches, call our team, or message us on WhatsApp and social media. We
-                will help you choose the right furniture for your home, showroom project, or office.
+                will help you choose the right furniture for your home, showroom project, or office,
+                whether you are searching for Galaxy Furniture sofas, bedroom sets, or general
+                Addis Ababa furniture options.
               </p>
 
               <div className="grid" style={{ gap: 10 }}>

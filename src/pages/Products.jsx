@@ -153,6 +153,33 @@ function toTitleCase(value) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+function cleanProductStem(filename) {
+  return filename
+    .replace(/\.[^.]+$/, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\(\s*\d+\s*\)/g, "")
+    .replace(/\s+\d+$/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeProductText(value) {
+  return value
+    .replace(/\bkidds\b/gi, "Kids")
+    .replace(/\brectanglar\b/gi, "Rectangular")
+    .replace(/\bpurpple\b/gi, "Purple")
+    .replace(/\bqhite\b/gi, "White")
+    .replace(/\bwoods\b/gi, "wood")
+    .replace(/\bhd sponges\b/gi, "HD sponge seats")
+    .replace(/\bhd sponge\b/gi, "HD sponge seats")
+    .replace(/\bwater proof\b/gi, "waterproof")
+    .replace(/\buv top\b/gi, "UV top")
+    .replace(/\bmetal frame\b/gi, "metal frame")
+    .replace(/\bstrong wood\b/gi, "strong wood construction")
+    .replace(/\bstrong woods\b/gi, "strong wood construction")
+    .replace(/\bsky blue\b/gi, "Sky Blue");
+}
+
 function slugify(value) {
   return value
     .toLowerCase()
@@ -164,14 +191,140 @@ function numberFileRange(start, end, extension = "png") {
   return Array.from({ length: end - start + 1 }, (_, index) => `${start + index}.${extension}`);
 }
 
+const PRODUCT_NAME_OVERRIDES = {
+  Closets: {
+    "1.webp": "Mirrored Panel Wardrobe",
+    "2.webp": "Two Tone Wardrobe Closet",
+    "3.webp": "Multi Door Wardrobe Closet",
+  },
+  "TV Stands": {
+    "1 (1).webp": "White Marble Top TV Stand",
+    "2 (1).webp": "Gold Frame TV Stand",
+    "3 (1).webp": "Black Top Gold Frame TV Stand",
+    "4.webp": "Fluted White TV Stand",
+    "5.webp": "Modern Fluted TV Stand",
+  },
+};
+
+const PRODUCT_DESCRIPTION_OVERRIDES = {
+  Closets: {
+    "1.webp":
+      "Mirrored panel wardrobe with full-height storage, lower drawers, and a bright modern finish for organized bedrooms.",
+    "2.webp":
+      "Two tone wardrobe closet with overhead cabinets, lower drawers, and durable daily storage for compact rooms.",
+    "3.webp":
+      "Multi door wardrobe closet with upper compartments, drawer storage, and a clean minimalist finish for everyday use.",
+  },
+  "TV Stands": {
+    "1 (1).webp":
+      "White marble top TV stand with side cabinets, a center drawer, and gold-finished legs for a polished living-room setup.",
+    "2 (1).webp":
+      "Gold frame TV stand with a black top, twin drawers, and open side shelving for a light modern look.",
+    "3 (1).webp":
+      "Black top gold frame TV stand with two drawers and wide display space for media devices and decor.",
+    "4.webp":
+      "Fluted white TV stand with a glossy top, open center shelf, and smooth drawer storage for contemporary interiors.",
+    "5.webp":
+      "Modern fluted TV stand with a central drawer, display shelf, and elegant metallic base for stylish media storage.",
+  },
+};
+
+function formatDiningTitle(baseName) {
+  const normalized = normalizeProductText(baseName);
+  const leadingChairMatch = normalized.match(/^(\d+)\s*chair\s*dining table$/i);
+  if (leadingChairMatch) return `${leadingChairMatch[1]} Chair Dining Table`;
+
+  const trailingChairMatch = normalized.match(/^dining table\s*(\d+)\s*chair$/i);
+  if (trailingChairMatch) return `${trailingChairMatch[1]} Chair Dining Table`;
+
+  return toTitleCase(normalized);
+}
+
+function deriveProductName(folder, filename) {
+  const override = PRODUCT_NAME_OVERRIDES[folder]?.[filename];
+  if (override) return override;
+
+  const baseName = cleanProductStem(filename);
+
+  if (folder === "Dining table") {
+    const primaryLabel = baseName.split(",")[0].trim();
+    return formatDiningTitle(primaryLabel);
+  }
+
+  let title = toTitleCase(normalizeProductText(baseName));
+
+  if (folder === "Double Bed" && !/\bbed\b/i.test(title)) {
+    title = `${title} Bed`;
+  }
+
+  if (folder === "Dressing Table") {
+    if (!/\btable\b/i.test(title)) {
+      if (/\bdressing\b/i.test(title) || /\bstudying\b/i.test(title)) {
+        title = `${title} Table`;
+      } else {
+        title = `${title} Dressing Table`;
+      }
+    }
+  }
+
+  return title;
+}
+
+function joinFeatureList(features) {
+  if (features.length === 0) return "";
+  if (features.length === 1) return features[0];
+  if (features.length === 2) return `${features[0]} and ${features[1]}`;
+  return `${features.slice(0, -1).join(", ")}, and ${features[features.length - 1]}`;
+}
+
+function deriveProductDescription(folder, filename, name) {
+  const override = PRODUCT_DESCRIPTION_OVERRIDES[folder]?.[filename];
+  if (override) return override;
+
+  if (folder === "Dining table") {
+    const parts = normalizeProductText(cleanProductStem(filename))
+      .split(",")
+      .map((part) => part.trim())
+      .filter(Boolean);
+    const features = parts.slice(1);
+    const featureText = joinFeatureList(features);
+
+    return featureText
+      ? `${name} with ${featureText} for durable everyday dining and comfortable family gatherings.`
+      : `${name} with durable construction and comfortable seating for everyday dining and hosting.`;
+  }
+
+  if (folder === "Double Bed") {
+    return `${name} with spacious comfort, durable upholstery, and a polished bedroom finish for daily use.`;
+  }
+
+  if (folder === "Closets") {
+    return `${name} with practical wardrobe storage, a clean finish, and dependable organization for modern bedrooms.`;
+  }
+
+  if (folder === "Dressing Table") {
+    if (/\bstudying\b/i.test(name)) {
+      return `${name} with practical workspace, useful storage, and a clean modern look for study corners and bedrooms.`;
+    }
+
+    return `${name} with practical storage, a polished surface, and an elegant finish for everyday bedroom use.`;
+  }
+
+  if (folder === "TV Stands") {
+    return `${name} with media storage, display space, and a modern finish for stylish living-room setups.`;
+  }
+
+  return null;
+}
+
 function createFolderProducts({ folder, category, prefix, filenames, price, description }) {
   return filenames.map((filename, index) => {
-    const name = toTitleCase(filename);
+    const name = deriveProductName(folder, filename);
     return {
       id: `${prefix}-${slugify(name)}-${index + 1}`,
       category,
       name,
-      description,
+      description: deriveProductDescription(folder, filename, name) || description,
       price,
       image: encodeImagePath(`/products/${folder}/${filename}`),
     };
@@ -179,104 +332,104 @@ function createFolderProducts({ folder, category, prefix, filenames, price, desc
 }
 
 const SOFA_FILENAMES = [
-  "88.png",
-  "Bronze king  coffee.png",
-  "Bronze king 1 (2).png",
-  "Bronze king 1.png",
-  "Bronze king 14.png",
-  "Bronze king 2.png",
-  "Bronze king centere table.png",
-  "Bronze king corner.png",
-  "Cube Handle dark Green 1.png",
-  "Cube Handle dark Green 2.png",
-  "Cube Handle dark Green 3.png",
-  "Cube Handle Gray 1.png",
-  "Cube Handle Gray 2 (2).png",
-  "Cube Handle Gray 2.png",
-  "Cube Handle Gray.png",
-  "Cube Handle Green 1.png",
-  "Cube Handle Green 2.png",
-  "Cube Handle Green 3.png",
-  "Cube Handle Green.png",
-  "dark blue king 1.png",
-  "For Homepage as a show finishing.png",
-  "Golden  king.png",
-  "Golden 2 king 1.png",
-  "Golden 2 king 2.png",
-  "Golden 2 king 3.png",
-  "Golden 2 king coffee.png",
-  "Golden 2 king corner tabel.png",
-  "Golden 2 king.png",
-  "Golden king 2.png",
-  "Gray sky-blue king.png",
-  "Inclined  brown Textured  2.png",
-  "Inclined blue.png",
-  "Inclined orange Textured  2.png",
-  "Inclined orange Textured  3.png",
-  "Inclined orange Textured.png",
-  "Inclined qhite.png",
-  "Inclined Textured  2.png",
-  "Inclined Textured  3.png",
-  "Inclined Textured 1.png",
-  "Inclined textured brown.png",
-  "Inclined Textured.png",
-  "Key Dark Gray.png",
-  "Key sofa 2.png",
-  "Key sofa 3.png",
-  "Key sofa 4.png",
-  "Key sofa cream  1.png",
-  "Key sofa cream  3.png",
-  "Key sofa cream 2.png",
-  "Key sofa cream 3.png",
-  "Key sofa cream 4.png",
-  "Key sofa cream 5.png",
-  "Key sofa cream.png",
-  "Key sofa skyblue.png",
-  "Key sofa.png",
-  "King Blue.png",
-  "king Dining And sofa.png",
-  "King golden 1.png",
-  "King Golden 3.png",
-  "King Golden coffee table.png",
-  "King Golden corner.png",
-  "King Golden.png",
-  "model 00 gray 1.png",
-  "model 00 gray 2.png",
-  "model 00 gray 3.png",
-  "model 00 gray.png",
-  "model 1 brown and cream 2.png",
-  "model 1 cream and brown.png",
-  "model 1 cream and gray.png",
-  "model 1 textured brown 1.png",
-  "model 1 textured brown.png",
-  "Model 1 white and black.png",
-  "Model 10 dark gray  Textured.png",
-  "Model 10 Textured.png",
-  "Model 11 Cream  1.png",
-  "Model 11 Cream 2.png",
-  "Model 11 Cream 3.png",
-  "Model 11 Cream.png",
-  "Model 11 dark grey 1.png",
-  "Model 11 dark grey 2.png",
-  "Model 11 dark grey 3.png",
-  "Model 11 dark grey.png",
-  "Model 11 grey 1.png",
-  "Model 11 grey 2.png",
-  "Model 11 grey 3.png",
-  "Model 11 grey.png",
-  "Model 2 Gray.png",
-  "model 3 skyblue.png",
-  "model 5 black (2).png",
-  "model 5 black 2.png",
-  "model 5 black 3.png",
-  "model 5 black.png",
-  "model 6 blu3.png",
-  "model 6 blue 1.png",
-  "model 6 blue 2.png",
-  "model 6 blue.png",
-  "Rectangular c Textured.png",
-  "Rectangular gray Textured.png",
-  "Rectangular light gray Textured.png",
+  "88.webp",
+  "Bronze king  coffee.webp",
+  "Bronze king 1 (2).webp",
+  "Bronze king 1.webp",
+  "Bronze king 14.webp",
+  "Bronze king 2.webp",
+  "Bronze king centere table.webp",
+  "Bronze king corner.webp",
+  "Cube Handle dark Green 1.webp",
+  "Cube Handle dark Green 2.webp",
+  "Cube Handle dark Green 3.webp",
+  "Cube Handle Gray 1.webp",
+  "Cube Handle Gray 2 (2).webp",
+  "Cube Handle Gray 2.webp",
+  "Cube Handle Gray.webp",
+  "Cube Handle Green 1.webp",
+  "Cube Handle Green 2.webp",
+  "Cube Handle Green 3.webp",
+  "Cube Handle Green.webp",
+  "dark blue king 1.webp",
+  "For Homepage as a show finishing.webp",
+  "Golden  king.webp",
+  "Golden 2 king 1.webp",
+  "Golden 2 king 2.webp",
+  "Golden 2 king 3.webp",
+  "Golden 2 king coffee.webp",
+  "Golden 2 king corner tabel.webp",
+  "Golden 2 king.webp",
+  "Golden king 2.webp",
+  "Gray sky-blue king.webp",
+  "Inclined  brown Textured  2.webp",
+  "Inclined blue.webp",
+  "Inclined orange Textured  2.webp",
+  "Inclined orange Textured  3.webp",
+  "Inclined orange Textured.webp",
+  "Inclined qhite.webp",
+  "Inclined Textured  2.webp",
+  "Inclined Textured  3.webp",
+  "Inclined Textured 1.webp",
+  "Inclined textured brown.webp",
+  "Inclined Textured.webp",
+  "Key Dark Gray.webp",
+  "Key sofa 2.webp",
+  "Key sofa 3.webp",
+  "Key sofa 4.webp",
+  "Key sofa cream  1.webp",
+  "Key sofa cream  3.webp",
+  "Key sofa cream 2.webp",
+  "Key sofa cream 3.webp",
+  "Key sofa cream 4.webp",
+  "Key sofa cream 5.webp",
+  "Key sofa cream.webp",
+  "Key sofa skyblue.webp",
+  "Key sofa.webp",
+  "King Blue.webp",
+  "king Dining And sofa.webp",
+  "King golden 1.webp",
+  "King Golden 3.webp",
+  "King Golden coffee table.webp",
+  "King Golden corner.webp",
+  "King Golden.webp",
+  "model 00 gray 1.webp",
+  "model 00 gray 2.webp",
+  "model 00 gray 3.webp",
+  "model 00 gray.webp",
+  "model 1 brown and cream 2.webp",
+  "model 1 cream and brown.webp",
+  "model 1 cream and gray.webp",
+  "model 1 textured brown 1.webp",
+  "model 1 textured brown.webp",
+  "Model 1 white and black.webp",
+  "Model 10 dark gray  Textured.webp",
+  "Model 10 Textured.webp",
+  "Model 11 Cream  1.webp",
+  "Model 11 Cream 2.webp",
+  "Model 11 Cream 3.webp",
+  "Model 11 Cream.webp",
+  "Model 11 dark grey 1.webp",
+  "Model 11 dark grey 2.webp",
+  "Model 11 dark grey 3.webp",
+  "Model 11 dark grey.webp",
+  "Model 11 grey 1.webp",
+  "Model 11 grey 2.webp",
+  "Model 11 grey 3.webp",
+  "Model 11 grey.webp",
+  "Model 2 Gray.webp",
+  "model 3 skyblue.webp",
+  "model 5 black (2).webp",
+  "model 5 black 2.webp",
+  "model 5 black 3.webp",
+  "model 5 black.webp",
+  "model 6 blu3.webp",
+  "model 6 blue 1.webp",
+  "model 6 blue 2.webp",
+  "model 6 blue.webp",
+  "Rectangular c Textured.webp",
+  "Rectangular gray Textured.webp",
+  "Rectangular light gray Textured.webp",
 ];
 
 const SOFA_GROUP_NAMES = {
@@ -333,7 +486,7 @@ function getSofaGroupKey(filename) {
   if (/\bmodel 6\b/.test(value)) return "model-6";
   if (/\brectangular\b/.test(value)) return "rectangular";
   if (/\bking\b/.test(value)) return "king";
-  if (/^88\.png$/i.test(filename)) return "88";
+  if (/^88\.(png|webp)$/i.test(filename)) return "88";
 
   return slugify(toTitleCase(filename));
 }
@@ -395,36 +548,35 @@ const EXTRA_BED_PRODUCTS = [
     category: "Beds",
     prefix: "bed-gallery",
     filenames: [
-      ...numberFileRange(31, 55),
-      "Double Bed with Stairs.png",
-      "I Shape  1.png",
-      "I Shape (2).png",
-      "I shape Z.png",
-      "I Shape.png",
-      "II Shape Blue.png",
-      "II Shape Brown z.png",
-      "II Shape Brown.png",
-      "II Shape Grey.png",
-      "II Shape z.png",
-      "Kids Ball Bed Blue.png",
-      "Kids Can and Batman 2.png",
-      "Kids Can and Batman.png",
-      "Kids Cat Pink z.png",
-      "Kids Cat Pink.png",
-      "O Shape Blue z.png",
-      "O Shape Blue.png",
-      "Square (2).png",
-      "Square Blue z.png",
-      "Square Blue.png",
-      "Square.png",
-      "T Shape black.png",
-      "T Shape cream z.png",
-      "T Shape Cream.png",
-      "T shape white Z.png",
-      "V shape z.png",
-      "V shape.png",
-      "W Shape Z.png",
-      "W shape.png",
+      ...numberFileRange(31, 53, "webp"),
+      "Double Bed with Stairs.webp",
+      "I Shape  1.webp",
+      "I Shape (2).webp",
+      "I shape Z.webp",
+      "I Shape.webp",
+      "II Shape Blue.webp",
+      "II Shape Brown z.webp",
+      "II Shape Brown.webp",
+      "II Shape Grey.webp",
+      "II Shape z.webp",
+      "Kids Ball Bed Blue.webp",
+      "Kids Can and Batman 2.webp",
+      "Kids Can and Batman.webp",
+      "Kids Cat Pink z.webp",
+      "Kids Cat Pink.webp",
+      "O Shape Blue z.webp",
+      "O Shape Blue.webp",
+      "Square (2).webp",
+      "Square Blue z.webp",
+      "Square.webp",
+      "T Shape black.webp",
+      "T Shape cream z.webp",
+      "T Shape Cream.webp",
+      "T shape white Z.webp",
+      "V shape z.webp",
+      "V shape.webp",
+      "W Shape Z.webp",
+      "W shape.webp",
     ],
     price: 85000,
     description: "Modern bed design with bold headboard styling, quality upholstery, and a premium bedroom finish.",
@@ -434,15 +586,14 @@ const EXTRA_BED_PRODUCTS = [
     category: "Beds",
     prefix: "double-bed",
     filenames: [
-      "9.png",
-      "Double gray 1.png",
-      "Double gray.png",
-      "Double Pink.png",
-      "Double Purple.png",
-      "Double Sky blue.png",
-      "Triple Green.png",
-      "Triple Purple 1.png",
-      "Triple purpple.png",
+      "Double gray 1.webp",
+      "Double gray.webp",
+      "Double Pink.webp",
+      "Double Purple.webp",
+      "Double Sky blue.webp",
+      "Triple Green.webp",
+      "Triple Purple 1.webp",
+      "Triple purpple.webp",
     ],
     price: 90000,
     description: "Spacious double and triple bed options built for comfort, statement styling, and daily durability.",
@@ -453,7 +604,52 @@ const DINING_PRODUCTS = createFolderProducts({
   folder: "Dining table",
   category: "Dining",
   prefix: "dining",
-  filenames: numberFileRange(1, 46),
+  filenames: [
+    "6 chair dining table , with strong woods , uv top , hd sponge (1).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (11).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (12).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (13).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (15).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (17).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (2).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (3).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (5).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (6).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (7).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (8).webp",
+    "6 chair dining table , with strong woods , uv top , hd sponge (9).webp",
+    "8 chair dining table , with strong woods , uv top , hd sponge (10).webp",
+    "8 chair dining table , with strong woods , uv top , hd sponge (14).webp",
+    "8 chair dining table , with strong woods , uv top , hd sponge (16).webp",
+    "8 chair dining table , with strong woods , uv top , hd sponge (4).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (1).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (10).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (11).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (12).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (13).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (14).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (15).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (16).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (17).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (18).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (19).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (2).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (20).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (21).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (22).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (23).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (24).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (25).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (26).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (3).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (4).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (5).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (6).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (7).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (8).webp",
+    "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (9).webp",
+    "Dining Table 8 chair , metal frame, uv top , water proof , hd sponges (27).webp",
+  ],
   price: 69000,
   description: "Dining table set designed for family meals, hosting, and durable everyday use.",
 });
@@ -463,7 +659,7 @@ const STORAGE_PRODUCTS = [
     folder: "Closets",
     category: "Storage",
     prefix: "closet",
-    filenames: numberFileRange(1, 3),
+    filenames: ["1.webp", "2.webp", "3.webp"],
     price: 74000,
     description: "Closet and wardrobe storage built for clean organization and a polished room finish.",
   }),
@@ -472,18 +668,17 @@ const STORAGE_PRODUCTS = [
     category: "Storage",
     prefix: "dressing-table",
     filenames: [
-      "12.png",
-      "A Shaped Dressing.png",
-      "Cube and Rectangular.png",
-      "Kidds Studying.png",
-      "Kids Studying table.png",
-      "Kids Studying table1.png",
-      "Oval Dressing.png",
-      "Rectanglar Dressing 1.png",
-      "Rectangular 2.png",
-      "Rectangular 4.png",
-      "Rectangular dressing 3.png",
-      "Rectangular Dressing.png",
+      "A Shaped Dressing.webp",
+      "Cube and Rectangular.webp",
+      "Kidds Studying.webp",
+      "Kids Studying table.webp",
+      "Kids Studying table1.webp",
+      "Oval Dressing.webp",
+      "Rectanglar Dressing 1.webp",
+      "Rectangular 2.webp",
+      "Rectangular 4.webp",
+      "Rectangular dressing 3.webp",
+      "Rectangular Dressing.webp",
     ],
     price: 54000,
     description: "Dressing and study table collection with practical storage and a clean modern look.",
@@ -492,7 +687,7 @@ const STORAGE_PRODUCTS = [
     folder: "TV Stands",
     category: "Storage",
     prefix: "tv-stand",
-    filenames: numberFileRange(1, 6),
+    filenames: ["1 (1).webp", "2 (1).webp", "3 (1).webp", "4.webp", "5.webp"],
     price: 48000,
     description: "TV stand collection with sleek storage, display space, and durable finishing for modern homes.",
   }),
@@ -726,7 +921,8 @@ export default function Products({
             <span className="badge">{initialCategory === "All" ? t("products") : initialCategory}</span>
             <h1 className="h1">{title || t("shop_by_category")}</h1>
             <p className="p">
-              {description || t("products_intro")}
+              {description ||
+                "Browse Galaxy Furniture sofas, bedroom sets, beds, dining tables, wardrobes, and other Addis Ababa furniture collections. Use WhatsApp or Telegram to request furniture prices in Ethiopia directly from our sales team."}
             </p>
           </div>
 
