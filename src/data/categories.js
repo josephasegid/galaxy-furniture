@@ -14,6 +14,13 @@ export const CATEGORY_PAGES = [
       "Browse strong, elegant beds designed for comfort and clean bedroom styling. Ask about custom sizing, headboards, and finishing options.",
   },
   {
+    slug: "kids-bed",
+    label: "Kids Bed",
+    title: "Kids Bed Collection",
+    description:
+      "Explore playful kids beds with colorful themes, creative headboards, and comfortable designs made for children's bedrooms.",
+  },
+  {
     slug: "dining",
     label: "Dining",
     title: "Dining Collection",
@@ -40,6 +47,13 @@ export const CATEGORY_PAGES = [
     title: "Outdoor Furniture",
     description:
       "See outdoor-ready furniture for balconies, patios, and garden spaces. Designed to balance comfort, style, and practical use.",
+  },
+  {
+    slug: "others",
+    label: "Others",
+    title: "Other Products",
+    description:
+      "Browse additional Galaxy Furniture pieces, special designs, and assorted home products outside the main collections.",
   },
 ];
 
