@@ -178,6 +178,99 @@ button, input, textarea{ font-family:inherit; }
   gap: 18px;
 }
 
+.product-flip-card{
+  position: relative;
+  min-height: 460px;
+  perspective: 1400px;
+  cursor: pointer;
+  outline: none;
+}
+
+.product-flip-card:focus-visible{
+  box-shadow: 0 0 0 4px rgba(255,215,0,.2);
+  border-radius: var(--radius2);
+}
+
+.product-flip-card-inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 460px;
+  transform-style: preserve-3d;
+  transition: transform .55s ease;
+}
+
+.product-flip-card.is-flipped .product-flip-card-inner{
+  transform: rotateY(180deg);
+}
+
+.product-flip-face{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.product-flip-front{
+  grid-template-rows: 220px auto;
+}
+
+.product-flip-back{
+  transform: rotateY(180deg);
+  background:
+    linear-gradient(180deg, rgba(255,215,0,.08), rgba(255,255,255,.03)),
+    var(--cardA);
+}
+
+.product-flip-back-content{
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  height: 100%;
+  overflow: auto;
+}
+
+.product-flip-back-preview{
+  overflow: hidden;
+  min-height: 180px;
+  border-radius: 18px;
+  border: 1px solid rgba(184,199,221,.16);
+  background: rgba(9,18,35,.9);
+}
+
+.product-flip-image-wrap{
+  overflow: hidden;
+  height: 220px;
+}
+
+.product-variant-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+  gap: 10px;
+}
+
+.product-variant-thumb{
+  padding: 0;
+  height: 68px;
+  border: 1px solid rgba(184,199,221,.16);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255,255,255,.03);
+  cursor: pointer;
+}
+
+.product-variant-thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-variant-thumb.is-active{
+  border-color: rgba(255,215,0,.65);
+  box-shadow: 0 0 0 2px rgba(255,215,0,.18);
+}
+
 @media (min-width: 860px){
   .products-hero-layout{
     grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
@@ -206,6 +299,11 @@ button, input, textarea{ font-family:inherit; }
 
   .products-cart-actions .btn{
     width: 100%;
+  }
+
+  .product-flip-card,
+  .product-flip-card-inner{
+    min-height: 500px;
   }
 }
 

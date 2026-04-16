@@ -346,6 +346,8 @@ const PRODUCT_CATALOG = [
   ),
 ];
 
+const GROUPED_PRODUCT_CATALOG = groupProducts(PRODUCT_CATALOG);
+
 export default function Products({
   category: forcedCategory,
   title,
@@ -355,6 +357,8 @@ export default function Products({
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("featured");
   const [cart, setCart] = useState([]);
+  const [activeVariantByProductId, setActiveVariantByProductId] = useState({});
+  const [flippedProductId, setFlippedProductId] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [requestOptionsId, setRequestOptionsId] = useState(null);
   const [zoom, setZoom] = useState(1);
@@ -362,7 +366,7 @@ export default function Products({
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_PRODUCTS);
 
   const selectedProduct = useMemo(
-    () => PRODUCT_CATALOG.find((item) => item.id === selectedProductId) ?? null,
+    () => GROUPED_PRODUCT_CATALOG.find((item) => item.id === selectedProductId) ?? null,
     [selectedProductId],
   );
 
@@ -401,14 +405,15 @@ export default function Products({
   const filteredProducts = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
 
-    let items = PRODUCT_CATALOG.filter((item) => {
+    let items = GROUPED_PRODUCT_CATALOG.filter((item) => {
       const matchesCategory = currentCategory === "All" || item.category === currentCategory;
       const matchesSearch =
         !normalizedSearch ||
         item.name.toLowerCase().includes(normalizedSearch) ||
         item.description.toLowerCase().includes(normalizedSearch) ||
         item.category.toLowerCase().includes(normalizedSearch) ||
-        item.colors.some((color) => color.toLowerCase().includes(normalizedSearch));
+        item.colors.some((color) => color.toLowerCase().includes(normalizedSearch)) ||
+        item.variants.some((variant) => variant.name.toLowerCase().includes(normalizedSearch));
 
       return matchesCategory && matchesSearch;
     });
@@ -428,7 +433,7 @@ export default function Products({
   const cartItems = useMemo(() => {
     return cart
       .map((entry) => {
-        const product = PRODUCT_CATALOG.find((item) => item.id === entry.id);
+        const product = GROUPED_PRODUCT_CATALOG.find((item) => item.id === entry.id);
         if (!product) return null;
 
         return {
@@ -438,6 +443,13 @@ export default function Products({
       })
       .filter(Boolean);
   }, [cart]);
+
+  const getActiveVariant = (product) => {
+    const variantIndex = activeVariantByProductId[product.id] ?? 0;
+    return product.variants[variantIndex] ?? product.variants[0];
+  };
+
+  const selectedVariant = selectedProduct ? getActiveVariant(selectedProduct) : null;
 
   const whatsappCartUrl = useMemo(() => {
     const lines = [
@@ -458,6 +470,10 @@ export default function Products({
 
   useEffect(() => {
     setVisibleCount(INITIAL_VISIBLE_PRODUCTS);
+  }, [currentCategory, search, sort]);
+
+  useEffect(() => {
+    setFlippedProductId(null);
   }, [currentCategory, search, sort]);
 
   return (
@@ -557,80 +573,129 @@ export default function Products({
                   gap: 18,
                 }}
               >
-                {visibleProducts.map((product) => (
-                  <article
-                    key={product.id}
-                    className="card hover-lift"
-                    style={{ overflow: "hidden", display: "grid", gridTemplateRows: "220px auto" }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedProductId(product.id);
-                        setZoom(1);
+                {visibleProducts.map((product) => {
+                  const activeVariant = getActiveVariant(product);
+
+                  return (
+                    <article
+                      key={product.id}
+                      className={`product-flip-card${flippedProductId === product.id ? " is-flipped" : ""}`}
+                      onClick={() =>
+                        setFlippedProductId((current) => (current === product.id ? null : product.id))
+                      }
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          setFlippedProductId((current) => (current === product.id ? null : product.id));
+                        }
                       }}
-                      style={imageButtonStyle}
+                      tabIndex={0}
+                      aria-label={`${product.name} card`}
                     >
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </button>
-
-                    <div style={{ padding: 18, display: "grid", gap: 12 }}>
-                      <div style={{ display: "grid", gap: 8 }}>
-                        <div className="badge" style={{ width: "fit-content" }}>
-                          {product.category}
-                        </div>
-                        <h2 className="h2" style={{ fontSize: 22, marginBottom: 0 }}>
-                          {product.name}
-                        </h2>
-                        <p className="small">{product.description}</p>
-                      </div>
-
-                      <div className="small">{t("colors")}: {product.colors.join(", ")}</div>
-
-                      <div style={{ display: "grid", gap: 8 }}>
-                        <button
-                          type="button"
-                          className="btn primary"
-                          onClick={() => addToCart(product, setCart, setToast, t)}
-                        >
-                          {t("add_to_cart")}
-                        </button>
-                        <div style={{ display: "grid", gap: 8 }}>
-                          <div className="filters">
-                            <button
-                              type="button"
-                              className="btn ghost"
-                              onClick={() =>
-                                setRequestOptionsId((current) =>
-                                  current === product.id ? null : product.id,
-                                )
-                              }
-                            >
-                              {t("request_price")}
-                            </button>
-                            <button
-                              type="button"
-                              className="btn ghost"
-                              onClick={() => {
-                                setSelectedProductId(product.id);
-                                setRequestOptionsId(null);
-                                setZoom(1);
+                      <div className="product-flip-card-inner">
+                        <div className="product-flip-face product-flip-front card hover-lift">
+                          <div className="product-flip-image-wrap">
+                            <img
+                              src={activeVariant.image}
+                              alt={activeVariant.name}
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
                               }}
-                            >
-                              {t("magnify")}
-                            </button>
+                            />
                           </div>
+                          <div style={{ padding: 18, display: "grid", gap: 12 }}>
+                            <div style={{ display: "grid", gap: 8 }}>
+                              <div className="badge" style={{ width: "fit-content" }}>
+                                {product.category}
+                              </div>
+                              <h2 className="h2" style={{ fontSize: 22, marginBottom: 0 }}>
+                                {product.name}
+                              </h2>
+                              <p className="small">{product.description}</p>
+                            </div>
+                            <div className="small">{product.variantCount} image options</div>
+                            <div className="small">{t("colors")}: {product.colors.join(", ")}</div>
+                            <div className="small" style={{ color: "var(--gold)", fontWeight: 700 }}>
+                              Click to see the other images
+                            </div>
+                          </div>
+                        </div>
 
-                          {requestOptionsId === product.id && (
-                            <div className="filters">
+                        <div className="product-flip-face product-flip-back card">
+                          <div className="product-flip-back-content">
+                            <div style={{ display: "grid", gap: 8 }}>
+                              <div className="badge" style={{ width: "fit-content" }}>
+                                {product.category}
+                              </div>
+                              <h2 className="h2" style={{ fontSize: 22, marginBottom: 0 }}>
+                                {product.name}
+                              </h2>
+                              <div className="small">Choose another image for this same product</div>
+                            </div>
+
+                            <div className="product-flip-back-preview">
+                              <img
+                                src={activeVariant.image}
+                                alt={activeVariant.name}
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </div>
+
+                            <div className="product-variant-grid" onClick={(event) => event.stopPropagation()}>
+                              {product.variants.map((variant, index) => (
+                                <button
+                                  key={variant.id}
+                                  type="button"
+                                  className={`product-variant-thumb${activeVariant.id === variant.id ? " is-active" : ""}`}
+                                  onClick={() =>
+                                    setActiveVariantByProductId((current) => ({
+                                      ...current,
+                                      [product.id]: index,
+                                    }))
+                                  }
+                                  aria-label={variant.name}
+                                >
+                                  <img src={variant.image} alt={variant.name} />
+                                </button>
+                              ))}
+                            </div>
+
+                            <div className="filters" onClick={(event) => event.stopPropagation()}>
+                              <button
+                                type="button"
+                                className="btn primary"
+                                onClick={() => addToCart(product, setCart, setToast, t)}
+                              >
+                                {t("add_to_cart")}
+                              </button>
+                              <button
+                                type="button"
+                                className="btn ghost"
+                                onClick={() => {
+                                  setSelectedProductId(product.id);
+                                  setRequestOptionsId(null);
+                                  setZoom(1);
+                                }}
+                              >
+                                {t("magnify")}
+                              </button>
+                            </div>
+
+                            <div className="filters" onClick={(event) => event.stopPropagation()}>
+                              <a
+                                className="btn ghost"
+                                href={buildWhatsAppInquiryUrl(product, activeVariant.image)}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {t("whatsapp")}
+                              </a>
                               <a
                                 className="btn ghost"
                                 href={TELEGRAM_URL}
@@ -641,25 +706,17 @@ export default function Products({
                               </a>
                               <a
                                 className="btn ghost"
-                                href={buildWhatsAppInquiryUrl(product)}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                {t("whatsapp")}
-                              </a>
-                              <a
-                                className="btn ghost"
                                 href={`tel:${PHONE_DISPLAY}`}
                               >
                                 {t("call")}
                               </a>
                             </div>
-                          )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </article>
-                ))}
+                    </article>
+                  );
+                })}
               </div>
             )}
 
@@ -784,8 +841,8 @@ export default function Products({
                 <div className="card" style={{ overflow: "hidden", background: "#091223" }}>
                   <div style={{ overflow: "auto", maxHeight: "68vh" }}>
                     <img
-                      src={selectedProduct.image}
-                      alt={selectedProduct.name}
+                      src={selectedVariant?.image}
+                      alt={selectedVariant?.name ?? selectedProduct.name}
                       style={{
                         width: "100%",
                         transform: `scale(${zoom})`,
@@ -805,7 +862,27 @@ export default function Products({
                       {selectedProduct.name}
                     </h2>
                     <p className="p">{selectedProduct.description}</p>
+                    <p className="small">{selectedProduct.variantCount} image options</p>
                     <p className="small">{t("zoom_help")}</p>
+                  </div>
+
+                  <div className="product-variant-grid">
+                    {selectedProduct.variants.map((variant, index) => (
+                      <button
+                        key={variant.id}
+                        type="button"
+                        className={`product-variant-thumb${selectedVariant?.id === variant.id ? " is-active" : ""}`}
+                        onClick={() =>
+                          setActiveVariantByProductId((current) => ({
+                            ...current,
+                            [selectedProduct.id]: index,
+                          }))
+                        }
+                        aria-label={variant.name}
+                      >
+                        <img src={variant.image} alt={variant.name} />
+                      </button>
+                    ))}
                   </div>
 
                   <div className="filters">
@@ -879,7 +956,7 @@ export default function Products({
                       </a>
                       <a
                         className="btn ghost"
-                        href={buildWhatsAppInquiryUrl(selectedProduct)}
+                        href={buildWhatsAppInquiryUrl(selectedProduct, selectedVariant?.image)}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -909,6 +986,7 @@ function createProduct(id, name, category, image, _price, colors, noteKeys = DEF
     name,
     category,
     image,
+    familyKey: buildFamilyKey(name, category),
     description: buildDescription(name, category),
     colors,
     noteKeys,
@@ -950,12 +1028,12 @@ function addToCart(product, setCart, setToast, t) {
   });
 }
 
-function buildWhatsAppInquiryUrl(product) {
+function buildWhatsAppInquiryUrl(product, image = product.image) {
   const message = [
     "Hello Galaxy Furniture,",
     `I want to ask about: ${product.name}`,
     `Category: ${product.category}`,
-    `Image: ${product.image}`,
+    `Image: ${image}`,
   ].join("\n");
 
   return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
@@ -1021,6 +1099,77 @@ function buildDescription(name, category) {
     default:
       return `${name} showcases Galaxy Furniture craftsmanship with a distinctive design, quality finishing, and flexible customization options.`;
   }
+}
+
+function groupProducts(products) {
+  const groups = new Map();
+
+  products.forEach((product) => {
+    const groupId = `${slugify(product.category)}-${product.familyKey}`;
+
+    if (!groups.has(groupId)) {
+      groups.set(groupId, {
+        id: groupId,
+        name: buildGroupName(product.name, product.category),
+        category: product.category,
+        image: product.image,
+        description: buildDescription(buildGroupName(product.name, product.category), product.category),
+        colors: [...product.colors],
+        noteKeys: [...product.noteKeys],
+        order: product.order,
+        variants: [],
+      });
+    }
+
+    const group = groups.get(groupId);
+    group.order = Math.min(group.order, product.order);
+    group.colors = Array.from(new Set([...group.colors, ...product.colors]));
+    group.noteKeys = Array.from(new Set([...group.noteKeys, ...product.noteKeys]));
+    group.variants.push({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+    });
+  });
+
+  return Array.from(groups.values())
+    .map((group) => ({
+      ...group,
+      image: group.variants[0]?.image ?? group.image,
+      variantCount: group.variants.length,
+    }))
+    .sort((left, right) => left.order - right.order);
+}
+
+function buildFamilyKey(name, category = "") {
+  const cleaned = name
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (category === "Dining") {
+    return cleaned.replace(/\s+\d+$/, "").trim();
+  }
+
+  return cleaned
+    .replace(/\s+(coffee|corner)\b.*$/i, "")
+    .replace(/\s+(center|centere)\s+(table|tabel)\b.*$/i, "")
+    .replace(/\s+dining\s+and\s+sofa\b.*$/i, "")
+    .replace(/\s+\d+$/, "")
+    .trim();
+}
+
+function buildGroupName(name, category = "") {
+  if (category === "Dining") {
+    return name.replace(/\s+\d+$/, "").trim();
+  }
+
+  return name
+    .replace(/\s+(coffee|corner)\b.*$/i, "")
+    .replace(/\s+(center|centere)\s+(table|tabel)\b.*$/i, "")
+    .replace(/\s+dining\s+and\s+sofa\b.*$/i, "")
+    .replace(/\s+\d+$/, "")
+    .trim();
 }
 
 const imageButtonStyle = {
