@@ -5,7 +5,7 @@ import { CATEGORY_PAGES } from "../data/categories.js";
 
 const WHATSAPP_PHONE = "251965333435";
 const PHONE_DISPLAY = "0965333435";
-const TELEGRAM_URL = "https://t.me/Galaxy_furniture";
+const TELEGRAM_URL = "tg://resolve?phone=251965333435";
 
 const DEFAULT_NOTE_KEYS = [
   "custom_size_color",
@@ -13,55 +13,337 @@ const DEFAULT_NOTE_KEYS = [
   "high_quality_finishing",
 ];
 
+const INITIAL_VISIBLE_PRODUCTS = 12;
+
 let PRODUCT_SEQUENCE = 0;
 
+const BEDS_2_FILES = [
+  "31.webp",
+  "32.webp",
+  "33.webp",
+  "34.webp",
+  "35.webp",
+  "36.webp",
+  "37.webp",
+  "38.webp",
+  "39.webp",
+  "40.webp",
+  "41.webp",
+  "42.webp",
+  "43.webp",
+  "44.webp",
+  "45.webp",
+  "46.webp",
+  "47.webp",
+  "48.webp",
+  "49.webp",
+  "50.webp",
+  "51.webp",
+  "52.webp",
+  "53.webp",
+  "Double Bed with Stairs.webp",
+  "I Shape  1.webp",
+  "I Shape (2).webp",
+  "I shape Z.webp",
+  "I Shape.webp",
+  "II Shape Blue.webp",
+  "II Shape Brown z.webp",
+  "II Shape Brown.webp",
+  "II Shape Grey.webp",
+  "II Shape z.webp",
+  "Kids Ball Bed Blue.webp",
+  "Kids Can and Batman 2.webp",
+  "Kids Can and Batman.webp",
+  "Kids Cat Pink z.webp",
+  "Kids Cat Pink.webp",
+  "O Shape Blue z.webp",
+  "O Shape Blue.webp",
+  "Square (2).webp",
+  "Square Blue z.webp",
+  "Square.webp",
+  "T Shape black.webp",
+  "T Shape cream z.webp",
+  "T Shape Cream.webp",
+  "T shape white Z.webp",
+  "V shape z.webp",
+  "V shape.webp",
+  "W Shape Z.webp",
+  "W shape.webp",
+];
+
+const DOUBLE_BED_FILES = [
+  "Double gray 1.webp",
+  "Double gray.webp",
+  "Double Pink.webp",
+  "Double Purple.webp",
+  "Double Sky blue.webp",
+  "Triple Green.webp",
+  "Triple Purple 1.webp",
+  "Triple purpple.webp",
+];
+
+const BEDS_WEB_FILES = [
+  "Batman-Bed-kid.jpg",
+  "Blue-Leather-Bed.jpg",
+  "boys-Kid-Bed.jpg",
+  "Brown-Bed.jpg",
+  "Brown-Bed1.jpg",
+  "Cream-Square.jpg",
+  "Cream-Texture-bed.jpg",
+  "Cream-Textured-bed.jpg",
+  "Dotted--Cream-bed.jpg",
+  "Dotted--Cream-bed1.jpg",
+  "Dotted--Cream-bed2.jpg",
+  "Double-Bed.jpg",
+  "Double-bed1.jpg",
+  "Kids-bed-2.jpg",
+  "Kids-bed-3.jpg",
+  "Kids-Bed.jpg",
+  "O-Shaped-Bed.jpg",
+  "Odhaped-Bed-2.jpg",
+  "Square-Bed-2.jpg",
+  "Square-bed.jpg",
+  "Square-Cream.jpg",
+  "Square-Leather-bed-1.jpg",
+  "Square-leather-Bed.jpg",
+  "T-shabe-black-bed.jpg",
+  "T-Shape-Black-Bed-2.jpg",
+  "T-Shape-Black-Bed.jpg",
+  "T-Shaped-cream-bed.jpg",
+  "V-Shape-Cream-bed.jpg",
+  "V-shape-Cream-bed1.jpg",
+];
+
+const SOFA_FILES = [
+  "88.webp",
+  "Bronze king  coffee.webp",
+  "Bronze king 1 (2).webp",
+  "Bronze king 1.webp",
+  "Bronze king 14.webp",
+  "Bronze king 2.webp",
+  "Bronze king centere table.webp",
+  "Bronze king corner.webp",
+  "Cube Handle dark Green 1.webp",
+  "Cube Handle dark Green 2.webp",
+  "Cube Handle dark Green 3.webp",
+  "Cube Handle Gray 1.webp",
+  "Cube Handle Gray 2 (2).webp",
+  "Cube Handle Gray 2.webp",
+  "Cube Handle Gray.webp",
+  "Cube Handle Green 1.webp",
+  "Cube Handle Green 2.webp",
+  "Cube Handle Green 3.webp",
+  "Cube Handle Green.webp",
+  "dark blue king 1.webp",
+  "For Homepage as a show finishing.webp",
+  "Golden  king.webp",
+  "Golden 2 king 1.webp",
+  "Golden 2 king 2.webp",
+  "Golden 2 king 3.webp",
+  "Golden 2 king coffee.webp",
+  "Golden 2 king corner tabel.webp",
+  "Golden 2 king.webp",
+  "Golden king 2.webp",
+  "Gray sky-blue king.webp",
+  "Inclined  brown Textured  2.webp",
+  "Inclined blue.webp",
+  "Inclined orange Textured  2.webp",
+  "Inclined orange Textured.webp",
+  "Inclined qhite.webp",
+  "Inclined Textured  2.webp",
+  "Inclined Textured  3.webp",
+  "Inclined Textured 1.webp",
+  "Inclined textured brown.webp",
+  "Inclined Textured.webp",
+  "Key Dark Gray.webp",
+  "Key sofa 2.webp",
+  "Key sofa 3.webp",
+  "Key sofa 4.webp",
+  "Key sofa cream  1.webp",
+  "Key sofa cream  3.webp",
+  "Key sofa cream 2.webp",
+  "Key sofa cream 3.webp",
+  "Key sofa cream 4.webp",
+  "Key sofa cream 5.webp",
+  "Key sofa cream.webp",
+  "Key sofa skyblue.webp",
+  "Key sofa.webp",
+  "King Blue.webp",
+  "king Dining And sofa.webp",
+  "King golden 1.webp",
+  "King Golden 3.webp",
+  "King Golden coffee table.webp",
+  "King Golden corner.webp",
+  "King Golden.webp",
+  "model 00 gray 1.webp",
+  "model 00 gray 2.webp",
+  "model 00 gray 3.webp",
+  "model 00 gray.webp",
+  "model 1 brown and cream 2.webp",
+  "model 1 cream and brown.webp",
+  "model 1 cream and gray.webp",
+  "model 1 textured brown 1.webp",
+  "model 1 textured brown.webp",
+  "Model 1 white and black.webp",
+  "Model 10 dark gray  Textured.webp",
+  "Model 10 Textured.webp",
+  "Model 11 Cream  1.webp",
+  "Model 11 Cream 2.webp",
+  "Model 11 Cream 3.webp",
+  "Model 11 Cream.webp",
+  "Model 11 dark grey 1.webp",
+  "Model 11 dark grey 2.webp",
+  "Model 11 dark grey 3.webp",
+  "Model 11 dark grey.webp",
+  "Model 11 grey 1.webp",
+  "Model 11 grey 2.webp",
+  "Model 11 grey 3.webp",
+  "Model 11 grey.webp",
+  "Model 2 Gray.webp",
+  "model 3 skyblue.webp",
+  "model 5 black (2).webp",
+  "model 5 black 2.webp",
+  "model 5 black 3.webp",
+  "model 5 black.webp",
+  "model 6 blu3.webp",
+  "model 6 blue 1.webp",
+  "model 6 blue 2.webp",
+  "model 6 blue.webp",
+  "Rectangular c Textured.webp",
+  "Rectangular gray Textured.webp",
+  "Rectangular light gray Textured.webp",
+];
+
+const DINING_FILES = [
+  "6 chair dining table , with strong woods , uv top , hd sponge (1).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (11).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (12).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (13).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (15).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (17).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (2).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (3).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (5).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (6).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (7).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (8).webp",
+  "6 chair dining table , with strong woods , uv top , hd sponge (9).webp",
+  "8 chair dining table , with strong woods , uv top , hd sponge (10).webp",
+  "8 chair dining table , with strong woods , uv top , hd sponge (14).webp",
+  "8 chair dining table , with strong woods , uv top , hd sponge (16).webp",
+  "8 chair dining table , with strong woods , uv top , hd sponge (4).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (1).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (10).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (11).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (12).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (13).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (14).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (15).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (16).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (17).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (18).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (19).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (2).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (20).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (21).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (22).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (23).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (24).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (25).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (26).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (3).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (4).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (5).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (6).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (7).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (8).webp",
+  "Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (9).webp",
+  "Dining Table 8 chair , metal frame, uv top , water proof , hd sponges (27).webp",
+];
+
+const KIDS_BED_FILES = [
+  "ball Kids.webp",
+  "Butter Fly.webp",
+  "Kitty and Batman.webp",
+  "Kitty.webp",
+  "Kitty1.webp",
+  "Spider man and Butter Fly 2.webp",
+  "Spider man and Butter Fly.webp",
+  "Spider Man.webp",
+];
+
+const CLOSETS_FILES = [
+  "1.webp",
+  "2.webp",
+  "3.webp",
+];
+
+const DRESSING_TABLE_FILES = [
+  "A Shaped Dressing.webp",
+  "Cube and Rectangular.webp",
+  "Kidds Studying.webp",
+  "Kids Studying table.webp",
+  "Kids Studying table1.webp",
+  "Oval Dressing.webp",
+  "Rectanglar Dressing 1.webp",
+  "Rectangular 2.webp",
+  "Rectangular 4.webp",
+  "Rectangular dressing 3.webp",
+  "Rectangular Dressing.webp",
+];
+
+const TV_STAND_FILES = [
+  "1 (1).webp",
+  "2 (1).webp",
+  "3 (1).webp",
+  "4.webp",
+  "5.webp",
+];
+
+const FEATURED_LOOSE_FILES = [
+  "sofa (1).webp",
+  "sofa (3).webp",
+  "sofa (4).webp",
+  "sofa (5).webp",
+  "sofa (6).webp",
+  "sofa (7).webp",
+  "sofa (8).webp",
+  "sofa (9).webp",
+];
+
 const PRODUCT_CATALOG = [
-  createProduct("sofa-king-golden", "King Golden Sofa", "Sofas", "/products/Sofas _2/King Golden.webp", 142000, ["Gold", "Cream", "Navy"]),
-  createProduct("sofa-key-cream", "Key Sofa Cream", "Sofas", "/products/Sofas _2/Key sofa cream.webp", 118000, ["Cream", "Beige", "Brown"]),
-  createProduct("sofa-model-11-grey", "Model 11 Grey", "Sofas", "/products/Sofas _2/Model 11 grey.webp", 126000, ["Grey", "Charcoal", "Sky Blue"]),
-  createProduct("sofa-cube-green", "Cube Handle Green", "Sofas", "/products/Sofas _2/Cube Handle Green.webp", 121500, ["Green", "Dark Green", "Grey"]),
-  createProduct("sofa-bronze", "Bronze King Set", "Sofas", "/products/Sofas _2/Bronze king 1.webp", 147500, ["Bronze", "Brown", "Cream"]),
-  createProduct("sofa-homepage", "Showroom Sofa", "Sofas", "/products/Sofas _2/For Homepage as a show finishing.webp", 134000, ["Beige", "Gold", "Olive"]),
-  createProduct("sofa-featured-1", "Galaxy Signature Sofa", "Sofas", "/products/sofa (1).webp", 128500, ["Cream", "Grey", "Blue"]),
-  createProduct("sofa-featured-7", "Premium Family Sofa", "Sofas", "/products/sofa (7).webp", 139000, ["Brown", "Navy", "Gold"]),
-
-  createProduct("bed-double-stairs", "Double Bed With Stairs", "Beds", "/products/Beds_2/Double Bed with Stairs.webp", 96000, ["White", "Grey", "Blue"]),
-  createProduct("bed-o-shape", "O Shape Bed", "Beds", "/products/Beds_2/O Shape Blue.webp", 88500, ["Blue", "Cream", "Grey"]),
-  createProduct("bed-square", "Square Bed", "Beds", "/products/Beds_2/Square.webp", 83500, ["Cream", "Brown", "Black"]),
-  createProduct("bed-t-shape", "T Shape Bed", "Beds", "/products/Beds_2/T Shape Cream.webp", 91500, ["Cream", "Black", "White"]),
-  createProduct("bed-double-grey", "Double Grey Bed", "Beds", "/products/Double Bed/Double gray.webp", 87500, ["Grey", "Silver", "Beige"]),
-  createProduct("bed-double-purple", "Double Purple Bed", "Beds", "/products/Double Bed/Double Purple.webp", 89800, ["Purple", "Grey", "Cream"]),
-  createProduct("bed-v-shape", "V Shape Bed", "Beds", "/products/beds web/images/V-Shape-Cream-bed.jpg", 84500, ["Cream", "Ivory", "Brown"]),
-  createProduct("bed-brown", "Brown Bed", "Beds", "/products/beds web/images/Brown-Bed.jpg", 81200, ["Brown", "Cream", "Black"]),
-
-  createProduct("kids-batman", "Batman Kids Bed", "Kids Bed", "/products/beds web/images/Batman-Bed-kid.jpg", 68400, ["Blue", "Yellow", "Black"]),
-  createProduct("kids-ball-blue", "Kids Ball Bed Blue", "Kids Bed", "/products/Beds_2/Kids Ball Bed Blue.webp", 66200, ["Blue", "White", "Grey"]),
-  createProduct("kids-kitty", "Kitty Bed", "Kids Bed", "/products/Kids Bed/Kitty.webp", 61800, ["Pink", "White", "Purple"]),
-  createProduct("kids-spiderman", "Spider Man Bed", "Kids Bed", "/products/Kids Bed/Spider Man.webp", 64500, ["Red", "Blue", "Black"]),
-  createProduct("kids-butterfly", "Butter Fly Bed", "Kids Bed", "/products/Kids Bed/Butter Fly.webp", 63200, ["Pink", "Purple", "White"]),
-
-  createProduct("dining-6-wood", "6 Chair Dining Table", "Dining", "/products/Dining table/6 chair dining table , with strong woods , uv top , hd sponge (1).webp", 112000, ["Walnut", "Black", "Cream"]),
-  createProduct("dining-8-wood", "8 Chair Dining Table", "Dining", "/products/Dining table/8 chair dining table , with strong woods , uv top , hd sponge (10).webp", 136000, ["Walnut", "Brown", "Black"]),
-  createProduct("dining-metal", "Metal Frame Dining Set", "Dining", "/products/Dining table/Dining Table 6 chair , metal frame, uv top , water proof , hd sponges (1).webp", 109500, ["Black", "Oak", "Grey"]),
-  createProduct("dining-metal-large", "Large Dining Set", "Dining", "/products/Dining table/Dining Table 8 chair , metal frame, uv top , water proof , hd sponge (1).webp", 141000, ["Oak", "Black", "Cream"]),
-
-  createProduct("office-study", "Kids Studying Table", "Office", "/products/Dressing Table/Kids Studying table.webp", 38400, ["White", "Blue", "Pink"]),
-  createProduct("office-study-alt", "Study Table With Storage", "Office", "/products/Dressing Table/Kids Studying table1.webp", 39600, ["White", "Grey", "Oak"]),
-  createProduct("office-rect-dress", "Rectangular Work Table", "Office", "/products/Dressing Table/Rectangular Dressing.webp", 45800, ["Brown", "White", "Black"]),
-  createProduct("office-tv-1", "Workspace Console", "Office", "/products/TV Stands/4.webp", 42900, ["Black", "Walnut", "Grey"]),
-
-  createProduct("storage-closet-1", "Closet Storage Unit", "Storage", "/products/Closets/1.webp", 74200, ["Oak", "White", "Grey"]),
-  createProduct("storage-closet-2", "Wardrobe Closet", "Storage", "/products/Closets/2.webp", 76800, ["Brown", "Black", "Cream"]),
-  createProduct("storage-tv-stand", "TV Stand", "Storage", "/products/TV Stands/1 (1).webp", 33800, ["Walnut", "White", "Black"]),
-  createProduct("storage-oval", "Oval Dressing Table", "Storage", "/products/Dressing Table/Oval Dressing.webp", 52200, ["Brown", "Cream", "Black"]),
-
-  createProduct("outdoor-lounge", "Outdoor Lounge Set", "Outdoor", "/products/sofa (8).webp", 128000, ["Sand", "Olive", "Grey"]),
-  createProduct("outdoor-patio", "Patio Seating Set", "Outdoor", "/products/sofa (9).webp", 119000, ["Stone", "Beige", "Brown"]),
-  createProduct("outdoor-balcony", "Balcony Sofa Set", "Outdoor", "/products/Sofas _2/Inclined blue.webp", 111500, ["Blue", "Grey", "Cream"]),
-
-  createProduct("other-a-shape", "A Shaped Dressing", "Others", "/products/Dressing Table/A Shaped Dressing.webp", 48700, ["Oak", "Black", "White"]),
-  createProduct("other-cube", "Cube And Rectangular", "Others", "/products/Dressing Table/Cube and Rectangular.webp", 50100, ["Brown", "Grey", "Cream"]),
-  createProduct("other-featured", "Galaxy Featured Piece", "Others", "/products/sofa (5).webp", 99500, ["Gold", "Cream", "Navy"]),
+  ...createProductsFromFiles(SOFA_FILES, "Sofas", "/products/Sofas _2", ["Custom", "Fabric", "Available"]),
+  ...createProductsFromFiles(BEDS_2_FILES, "Beds", "/products/Beds_2", ["Custom", "Headboard", "Available"]),
+  ...createProductsFromFiles(DOUBLE_BED_FILES, "Beds", "/products/Double Bed", ["Custom", "Color", "Available"]),
+  ...createProductsFromFiles(BEDS_WEB_FILES, "Beds", "/products/beds web/images", ["Custom", "Size", "Available"]),
+  ...createProductsFromFiles(KIDS_BED_FILES, "Kids Bed", "/products/Kids Bed", ["Custom", "Theme", "Available"]),
+  ...createProductsFromFiles(DINING_FILES, "Dining", "/products/Dining table", ["Custom", "Size", "Available"]),
+  ...createProductsFromFiles(
+    DRESSING_TABLE_FILES.filter((fileName) => /studying|table/i.test(fileName)),
+    "Office",
+    "/products/Dressing Table",
+    ["Custom", "Finish", "Available"],
+  ),
+  ...createProductsFromFiles(CLOSETS_FILES, "Storage", "/products/Closets", ["Custom", "Layout", "Available"]),
+  ...createProductsFromFiles(TV_STAND_FILES, "Storage", "/products/TV Stands", ["Custom", "Finish", "Available"]),
+  ...createProductsFromFiles(
+    DRESSING_TABLE_FILES.filter((fileName) => !/studying|table/i.test(fileName)),
+    "Others",
+    "/products/Dressing Table",
+    ["Custom", "Finish", "Available"],
+  ),
+  ...createProductsFromFiles(
+    FEATURED_LOOSE_FILES.slice(0, 2),
+    "Outdoor",
+    "/products",
+    ["Custom", "Material", "Available"],
+  ),
+  ...createProductsFromFiles(
+    FEATURED_LOOSE_FILES.slice(2),
+    "Others",
+    "/products",
+    ["Custom", "Design", "Available"],
+  ),
 ];
 
 export default function Products({
@@ -77,6 +359,7 @@ export default function Products({
   const [requestOptionsId, setRequestOptionsId] = useState(null);
   const [zoom, setZoom] = useState(1);
   const [toast, setToast] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_PRODUCTS);
 
   const selectedProduct = useMemo(
     () => PRODUCT_CATALOG.find((item) => item.id === selectedProductId) ?? null,
@@ -123,6 +406,7 @@ export default function Products({
       const matchesSearch =
         !normalizedSearch ||
         item.name.toLowerCase().includes(normalizedSearch) ||
+        item.description.toLowerCase().includes(normalizedSearch) ||
         item.category.toLowerCase().includes(normalizedSearch) ||
         item.colors.some((color) => color.toLowerCase().includes(normalizedSearch));
 
@@ -131,10 +415,6 @@ export default function Products({
 
     items = [...items].sort((left, right) => {
       switch (sort) {
-        case "low-high":
-          return left.price - right.price;
-        case "high-low":
-          return right.price - left.price;
         case "name":
           return left.name.localeCompare(right.name);
         default:
@@ -154,31 +434,31 @@ export default function Products({
         return {
           ...product,
           quantity: entry.quantity,
-          lineTotal: product.price * entry.quantity,
         };
       })
       .filter(Boolean);
   }, [cart]);
-
-  const cartTotal = cartItems.reduce((sum, item) => sum + item.lineTotal, 0);
 
   const whatsappCartUrl = useMemo(() => {
     const lines = [
       "Hello Galaxy Furniture, I want to place this order:",
       "",
       ...cartItems.map(
-        (item, index) =>
-          `${index + 1}. ${item.name} x${item.quantity} - ${formatPrice(item.lineTotal)}`,
+        (item, index) => `${index + 1}. ${item.name} x${item.quantity}`,
       ),
-      "",
-      `Total: ${formatPrice(cartTotal)}`,
     ];
 
     return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(lines.join("\n"))}`;
-  }, [cartItems, cartTotal]);
+  }, [cartItems]);
 
   const pageTitle = title || t("products");
   const pageDescription = description || t("products_intro");
+  const visibleProducts = filteredProducts.slice(0, visibleCount);
+  const hasMoreProducts = filteredProducts.length > visibleCount;
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE_PRODUCTS);
+  }, [currentCategory, search, sort]);
 
   return (
     <div className="page">
@@ -244,8 +524,6 @@ export default function Products({
                   onChange={(event) => setSort(event.target.value)}
                 >
                   <option value="featured">{t("sort_featured")}</option>
-                  <option value="low-high">{t("sort_low_high")}</option>
-                  <option value="high-low">{t("sort_high_low")}</option>
                   <option value="name">{t("sort_name")}</option>
                 </select>
               </div>
@@ -279,7 +557,7 @@ export default function Products({
                   gap: 18,
                 }}
               >
-                {filteredProducts.map((product) => (
+                {visibleProducts.map((product) => (
                   <article
                     key={product.id}
                     className="card hover-lift"
@@ -312,12 +590,10 @@ export default function Products({
                         <h2 className="h2" style={{ fontSize: 22, marginBottom: 0 }}>
                           {product.name}
                         </h2>
-                        <p className="small">{formatPrice(product.price)}</p>
+                        <p className="small">{product.description}</p>
                       </div>
 
-                      <div className="small">
-                        {t("colors")}: {product.colors.join(", ")}
-                      </div>
+                      <div className="small">{t("colors")}: {product.colors.join(", ")}</div>
 
                       <div style={{ display: "grid", gap: 8 }}>
                         <button
@@ -386,6 +662,18 @@ export default function Products({
                 ))}
               </div>
             )}
+
+            {hasMoreProducts && (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <button
+                  type="button"
+                  className="btn ghost"
+                  onClick={() => setVisibleCount((current) => current + INITIAL_VISIBLE_PRODUCTS)}
+                >
+                  More
+                </button>
+              </div>
+            )}
           </div>
 
           <aside className="card" style={{ padding: 18, display: "grid", gap: 14, position: "sticky", top: 16 }}>
@@ -401,21 +689,11 @@ export default function Products({
                 {cartItems.map((item) => (
                   <div key={item.id} className="chip" style={{ display: "grid", gap: 6 }}>
                     <strong style={{ fontSize: 15 }}>{item.name}</strong>
-                    <div className="small">
-                      {item.quantity} x {formatPrice(item.price)}
-                    </div>
-                    <div className="small">{formatPrice(item.lineTotal)}</div>
+                    <div className="small">{item.quantity} {t("items")}</div>
                   </div>
                 ))}
               </div>
             )}
-
-            <div className="hr" />
-
-            <div className="filters" style={{ justifyContent: "space-between" }}>
-              <strong>{t("total")}</strong>
-              <strong>{formatPrice(cartTotal)}</strong>
-            </div>
 
             <div style={{ display: "grid", gap: 10 }}>
               <a
@@ -526,7 +804,7 @@ export default function Products({
                     <h2 className="h2" style={{ marginBottom: 0 }}>
                       {selectedProduct.name}
                     </h2>
-                    <p className="p">{formatPrice(selectedProduct.price)}</p>
+                    <p className="p">{selectedProduct.description}</p>
                     <p className="small">{t("zoom_help")}</p>
                   </div>
 
@@ -625,17 +903,30 @@ export default function Products({
   );
 }
 
-function createProduct(id, name, category, image, price, colors, noteKeys = DEFAULT_NOTE_KEYS) {
+function createProduct(id, name, category, image, _price, colors, noteKeys = DEFAULT_NOTE_KEYS) {
   return {
     id,
     name,
     category,
     image,
-    price,
+    description: buildDescription(name, category),
     colors,
     noteKeys,
     order: PRODUCT_SEQUENCE++,
   };
+}
+
+function createProductsFromFiles(files, category, basePath, colors) {
+  return files.map((fileName) =>
+    createProduct(
+      `${slugify(category)}-${slugify(fileName)}`,
+      labelFromFileName(fileName, category),
+      category,
+      `${basePath}/${fileName}`,
+      0,
+      colors,
+    ),
+  );
 }
 
 function addToCart(product, setCart, setToast, t) {
@@ -670,12 +961,66 @@ function buildWhatsAppInquiryUrl(product) {
   return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
 }
 
-function formatPrice(value) {
-  return new Intl.NumberFormat("en-ET", {
-    style: "currency",
-    currency: "ETB",
-    maximumFractionDigits: 0,
-  }).format(value);
+function slugify(value) {
+  return value
+    .toLowerCase()
+    .replace(/\.[a-z0-9]+$/i, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function labelFromFileName(fileName, category = "") {
+  const cleaned = fileName
+    .replace(/\.[a-z0-9]+$/i, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/\((\d+)\)/g, "$1")
+    .trim();
+
+  if (category === "Dining") {
+    const variantMatch = cleaned.match(/(\d+)$/);
+    const variant = variantMatch ? ` ${variantMatch[1]}` : "";
+
+    if (/metal frame/i.test(cleaned)) {
+      const chairMatch = cleaned.match(/(\d+)\s*chair/i);
+      const chairLabel = chairMatch ? `${chairMatch[1]} Chair ` : "";
+      return `${chairLabel}Metal Frame Dining Set${variant}`.trim();
+    }
+
+    if (/(\d+)\s*chair/i.test(cleaned)) {
+      const chairCount = cleaned.match(/(\d+)\s*chair/i)?.[1];
+      return `${chairCount} Chair Dining Table${variant}`.trim();
+    }
+
+    return `Dining Set${variant}`.trim();
+  }
+
+  if (/^\d+(\s+\d+)?$/.test(cleaned)) {
+    return `${category} Design ${cleaned}`;
+  }
+
+  return cleaned;
+}
+
+function buildDescription(name, category) {
+  switch (category) {
+    case "Sofas":
+      return `${name} features a stylish sofa layout with comfortable seating, premium finishing, and customization options for modern living spaces.`;
+    case "Beds":
+      return `${name} is designed for comfort, strong structure, and a refined bedroom look, with customization available for size, headboard, and finish.`;
+    case "Kids Bed":
+      return `${name} brings a playful design, comfortable sleeping space, and family-friendly styling for children's bedrooms.`;
+    case "Dining":
+      return `${name} is built for everyday dining, family gatherings, and a polished dining-room setup with practical finishing and durable construction.`;
+    case "Office":
+      return `${name} supports productive workspaces with a clean professional look, practical surface area, and a finish suited for daily use.`;
+    case "Storage":
+      return `${name} helps organize the home with a practical layout, clean lines, and a finish designed to suit modern interiors.`;
+    case "Outdoor":
+      return `${name} offers a relaxed seating style and a durable finish suited for balconies, patios, and casual outdoor settings.`;
+    default:
+      return `${name} showcases Galaxy Furniture craftsmanship with a distinctive design, quality finishing, and flexible customization options.`;
+  }
 }
 
 const imageButtonStyle = {

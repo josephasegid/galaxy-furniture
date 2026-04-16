@@ -1,17 +1,17 @@
 :root{
   --gold:#FFD700;
-  --navy:#0A192F;
+  --navy:#000f24;
   --font-body: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   --font-display: Georgia, "Times New Roman", serif;
 
-  --bg1:#0A192F;
-  --bg2:#0A192F;
+  --bg1:#000f24;
+  --bg2:#000f24;
 
   --text:#eaf2ff;
   --muted:#b8c7dd;
 
-  --cardA: #0A192F;
-  --cardB: #0A192F;
+  --cardA: #000f24;
+  --cardB: #000f24;
 
   --stroke: rgba(184,199,221,.16);
   --stroke2: rgba(255,215,0,.22);

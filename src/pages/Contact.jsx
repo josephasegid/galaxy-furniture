@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { useLanguage } from "../context/LanguageContext.jsx";
+
+const CONTACT_EMAIL = "galaxyfurnitureet@gmail.com";
 
 const SOCIAL_LINKS = [
   { label: "TikTok", href: "https://www.tiktok.com/@galaxyfurniture4?_r=1&_t=ZS-9534VLbGl1h", icon: "tiktok" },
@@ -9,6 +12,37 @@ const SOCIAL_LINKS = [
 
 export default function Contact() {
   const { t } = useLanguage();
+  const [form, setForm] = useState({
+    fullName: "",
+    phoneNumber: "",
+    requestType: "",
+    message: "",
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const subject = form.requestType.trim()
+      ? `Furniture Request: ${form.requestType.trim()}`
+      : "Furniture Request";
+
+    const body = [
+      "Hello Galaxy Furniture,",
+      "",
+      `Full Name: ${form.fullName || "-"}`,
+      `Phone Number: ${form.phoneNumber || "-"}`,
+      `Request: ${form.requestType || "-"}`,
+      "",
+      "Message:",
+      form.message || "-",
+    ].join("\n");
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const updateField = (key) => (event) => {
+    setForm((current) => ({ ...current, [key]: event.target.value }));
+  };
 
   return (
     <div className="grid cols-2" style={{ alignItems: "start" }}>
@@ -21,8 +55,10 @@ export default function Contact() {
 
         <div className="grid" style={{ gap: 12 }}>
           <ContactRow label={t("phone")} value="0965333435" />
+          <ContactRow label={t("email")} value={CONTACT_EMAIL} href={`mailto:${CONTACT_EMAIL}`} />
           <ContactRow label={t("owner")} value="Seid Mohamed Taye" />
           <a className="btn primary" href="tel:0965333435">{t("call_now")}</a>
+          <a className="btn" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           <a
             className="btn"
             href="https://wa.me/251965333435?text=Hello%20Galaxy%20Furniture%2C%20I%20want%20to%20ask%20about%20furniture."
@@ -47,14 +83,35 @@ export default function Contact() {
         <h2 className="h2">{t("send_request")}</h2>
         <p className="p">{t("demo_form")}</p>
 
-        <form onSubmit={(e) => e.preventDefault()} style={{ marginTop: 14, display: "grid", gap: 12 }}>
-          <Input label={t("full_name")} placeholder={t("your_name")} />
-          <Input label={t("phone_number")} placeholder="09..." />
-          <Input label={t("what_do_you_need")} placeholder={t("custom_order_placeholder")} />
+        <form onSubmit={handleSubmit} style={{ marginTop: 14, display: "grid", gap: 12 }}>
+          <Input
+            label={t("full_name")}
+            placeholder={t("your_name")}
+            value={form.fullName}
+            onChange={updateField("fullName")}
+          />
+          <Input
+            label={t("phone_number")}
+            placeholder="09..."
+            value={form.phoneNumber}
+            onChange={updateField("phoneNumber")}
+          />
+          <Input
+            label={t("what_do_you_need")}
+            placeholder={t("custom_order_placeholder")}
+            value={form.requestType}
+            onChange={updateField("requestType")}
+          />
 
           <label style={{ display: "grid", gap: 6 }}>
             <span style={{ fontSize: 13, color: "rgba(184,199,221,.95)" }}>{t("message")}</span>
-            <textarea rows="5" placeholder={t("write_message")} style={fieldStyle} />
+            <textarea
+              rows="5"
+              placeholder={t("write_message")}
+              style={fieldStyle}
+              value={form.message}
+              onChange={updateField("message")}
+            />
           </label>
 
           <button className="btn primary" type="submit">{t("submit_demo")}</button>
@@ -64,20 +121,26 @@ export default function Contact() {
   );
 }
 
-function ContactRow({ label, value }) {
+function ContactRow({ label, value, href }) {
   return (
     <div style={{ padding: 14, borderRadius: 16, border: "1px solid rgba(184,199,221,.16)", background: "rgba(255,255,255,.03)" }}>
       <div style={{ color: "rgba(184,199,221,.9)", fontSize: 13 }}>{label}</div>
-      <div style={{ fontSize: 16, fontWeight: 800, marginTop: 6 }}>{value}</div>
+      {href ? (
+        <a href={href} style={{ fontSize: 16, fontWeight: 800, marginTop: 6, display: "inline-block" }}>
+          {value}
+        </a>
+      ) : (
+        <div style={{ fontSize: 16, fontWeight: 800, marginTop: 6 }}>{value}</div>
+      )}
     </div>
   );
 }
 
-function Input({ label, placeholder }) {
+function Input({ label, placeholder, value, onChange }) {
   return (
     <label style={{ display: "grid", gap: 6 }}>
       <span style={{ fontSize: 13, color: "rgba(184,199,221,.95)" }}>{label}</span>
-      <input placeholder={placeholder} style={fieldStyle} />
+      <input placeholder={placeholder} style={fieldStyle} value={value} onChange={onChange} />
     </label>
   );
 }

@@ -11,6 +11,8 @@ function createEmbedSrc(mapLink) {
 const BRANCHES = [
   {
     name: "Showroom 1 - Semit 72",
+    phone: "0967333435",
+    image: "/products/Branches/Branch 1 - Semit 72 Branch.jpg",
     desc: "Galaxy Furniture showroom at Semit 72 area for customers searching for Addis Ababa furniture with easy map access.",
     hours: "Mon-Sat: 8:30-7:00",
     mapLink: SHOWROOM_LINKS.showroom1,
@@ -18,6 +20,8 @@ const BRANCHES = [
   },
   {
     name: "Showroom 2 - Figa",
+    phone: "0965333435",
+    image: "/products/Branches/Branch 2 - Figa Branch.jpg",
     desc: "Galaxy Furniture showroom at Figa area serving customers looking for nearby sofas, bedroom sets, and modern furniture.",
     hours: "Mon-Sat: 8:30-7:00",
     mapLink: SHOWROOM_LINKS.showroom2,
@@ -25,6 +29,8 @@ const BRANCHES = [
   },
   {
     name: "Showroom 3 - Goro",
+    phone: "0966333435",
+    image: "/products/Branches/Branch 3- Goro Branch.jpg",
     desc: "Galaxy Furniture Showroom No 3 at Goro, convenient for customers searching for Galaxy Furniture near Bole, Addis Ababa.",
     hours: "Mon-Sat: 8:30-7:00",
     mapLink: SHOWROOM_LINKS.showroom3,
@@ -47,6 +53,11 @@ export default function Branches() {
       <section className="grid cols-3">
         {BRANCHES.map((branch) => (
           <div key={branch.name} className="card hover-lift" style={{ padding: 18 }}>
+            <img
+              src={branch.image}
+              alt={branch.name}
+              style={{ width: "100%", height: 220, objectFit: "cover", display: "block", borderRadius: 18, marginBottom: 14 }}
+            />
             <div
               style={{
                 display: "flex",
@@ -83,7 +94,7 @@ export default function Branches() {
                 flexWrap: "wrap",
               }}
             >
-              <a className="btn ghost" href="tel:0965333435" style={{ borderRadius: 999 }}>
+              <a className="btn ghost" href={`tel:${branch.phone}`} style={{ borderRadius: 999 }}>
                 Call
               </a>
               <a
@@ -128,6 +139,12 @@ export default function Branches() {
               Open in Google Maps
             </a>
           </div>
+
+          <img
+            src={branch.image}
+            alt={`${branch.name} showroom`}
+            style={{ width: "100%", height: 280, objectFit: "cover", display: "block", borderRadius: 18, marginTop: 14 }}
+          />
 
           <div style={{ marginTop: 14 }} className="mapWrap">
             <iframe

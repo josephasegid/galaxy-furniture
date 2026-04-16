@@ -13,66 +13,116 @@ const CATEGORY_CARDS = [
     title: "Sofas",
     to: "/sofas",
     description: "Premium seating for modern living rooms, family spaces, and elegant interiors.",
-    image: "/products/sofa%20(1).webp",
+    image: "/products/Royal%20L-Shape%20Sofa.jpg",
   },
   {
     title: "Beds",
     to: "/beds",
     description: "Comfort-first bedroom furniture with strong structure, clean lines, and refined finishing.",
-    image: "/hero/images/optimized.jpg",
+    image: "/products/Luxury%20Bedroom%20Set.webp",
   },
   {
     title: "Dining Tables",
     to: "/dining",
     description: "Stylish dining sets made for everyday family use and memorable gatherings.",
-    image: "/products/sofa%20(2).webp",
+    image: "/products/Dining%20table/6%20chair%20dining%20table%20,%20with%20strong%20woods%20,%20uv%20top%20,%20hd%20sponge%20(1).webp",
   },
   {
     title: "Coffee Tables",
     to: "/products",
     description: "Compact accent pieces that complete living spaces with practicality and style.",
-    image: "/products/sofa%20(3).webp",
+    image: "/products/Sofas%20_2/King%20Golden%20coffee%20table.webp",
   },
   {
     title: "TV Stands",
     to: "/storage",
     description: "Functional media units with a polished look, smart storage, and durable build quality.",
-    image: "/products/sofa%20(4).webp",
+    image: "/products/TV%20Stands/4.webp",
   },
   {
     title: "Wardrobes",
     to: "/storage",
     description: "Modern storage solutions designed to organize bedrooms beautifully.",
-    image: "/products/sofa%20(5).webp",
+    image: "/products/Closets/2.webp",
   },
   {
     title: "Office Furniture",
     to: "/office",
     description: "Professional desks and work furniture built for productivity and presentation.",
-    image: "/products/sofa%20(6).webp",
+    image: "/products/Dressing%20Table/Kids%20Studying%20table.webp",
   },
 ];
 
 const FEATURED_PRODUCTS = [
   {
     name: "Royal L-Shape Sofa",
-    price: "ETB 150,000",
     description: "A statement sofa with premium fabric, rich cushioning, and a spacious modern silhouette.",
-    image: "/products/sofa%20(7).webp",
+    image: "/products/Royal L-Shape Sofa.jpg",
   },
   {
     name: "Classic 3-Seater",
-    price: "ETB 150,000",
     description: "Balanced comfort and clean design for living rooms that need timeless elegance.",
-    image: "/products/sofa%20(8).webp",
+    image: "/products/Classic 3-Seater.webp",
   },
   {
     name: "Luxury Bedroom Set",
-    price: "ETB 85,000",
     description: "Strong structure, refined detailing, and a premium look for restful modern bedrooms.",
-    image: "/hero/images/optimized.jpg",
+    image: "/products/Luxury Bedroom Set.webp",
   },
 ];
+
+const BRANCH_HIGHLIGHTS = [
+  {
+    name: "Showroom 1 - Semit 72",
+    image: "/products/Branches/Branch 1 - Semit 72 Branch.jpg",
+    note: "Accessible showroom with direct map support.",
+  },
+  {
+    name: "Showroom 2 - Figa",
+    image: "/products/Branches/Branch 2 - Figa Branch.jpg",
+    note: "A practical stop for sofas, beds, and family furniture.",
+  },
+  {
+    name: "Showroom 3 - Goro",
+    image: "/products/Branches/Branch 3- Goro Branch.jpg",
+    note: "Convenient for customers around Goro and nearby Bole areas.",
+  },
+];
+
+const FURNITURE_COLOR_OPTIONS = {
+  Sofas: [
+    { name: "Cream", hex: "#e8dcc8" },
+    { name: "Charcoal", hex: "#3b4048" },
+    { name: "Olive", hex: "#6e7754" },
+    { name: "Navy", hex: "#1d3557" },
+    { name: "Coffee", hex: "#6f4e37" },
+    { name: "Sand", hex: "#c8b79c" },
+  ],
+  Beds: [
+    { name: "Ivory", hex: "#f4efe6" },
+    { name: "Walnut", hex: "#7a5230" },
+    { name: "Grey", hex: "#8e97a1" },
+    { name: "Midnight", hex: "#22324a" },
+    { name: "Rose Beige", hex: "#c9a79a" },
+    { name: "Black", hex: "#1b1d21" },
+  ],
+  Dining: [
+    { name: "Oak", hex: "#b98952" },
+    { name: "Espresso", hex: "#4e342e" },
+    { name: "Stone", hex: "#9ea7ad" },
+    { name: "Forest", hex: "#556b57" },
+    { name: "Slate", hex: "#4f5d75" },
+    { name: "Pearl", hex: "#ddd7ce" },
+  ],
+  Office: [
+    { name: "Graphite", hex: "#495057" },
+    { name: "Natural Oak", hex: "#b6854f" },
+    { name: "White", hex: "#f7f7f5" },
+    { name: "Deep Blue", hex: "#16324f" },
+    { name: "Clay", hex: "#a8765b" },
+    { name: "Ash", hex: "#a8b0b8" },
+  ],
+};
 
 const WHY_CHOOSE_US = [
   {
@@ -238,6 +288,7 @@ export default function Home() {
   const faq = useReveal();
   const contact = useReveal();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeFurnitureType, setActiveFurnitureType] = useState("Sofas");
   const showroomSlide = SHOWROOM_SLIDES[activeSlide];
 
   useEffect(() => {
@@ -400,10 +451,9 @@ export default function Home() {
               </div>
 
               <div className="grid cols-2" style={{ gap: 14 }}>
-                <ImageTile
-                  src="/products/sofa%20(6).webp"
-                  title="Custom colors"
-                  note="Personalize the look"
+                <ColorSelectionTile
+                  activeFurnitureType={activeFurnitureType}
+                  setActiveFurnitureType={setActiveFurnitureType}
                 />
                 <ImageTile
                   src="/products/sofa%20(8).webp"
@@ -420,7 +470,7 @@ export default function Home() {
         <div className="grid cols-2" style={{ alignItems: "stretch", gap: 18 }}>
           <div className="card glow hover-lift" style={{ padding: 0, minHeight: 420 }}>
             <img
-              src="/products/sofa%20(2).webp"
+              src="/products/Designed%20to%20make%20every%20room%20feel%20complete.webp"
               alt="Galaxy Furniture interior collection"
               style={{ width: "100%", height: "100%", minHeight: 420, objectFit: "cover", display: "block" }}
             />
@@ -645,6 +695,36 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="card reveal" style={{ padding: 24 }}>
+        <SectionHeader
+          badge="Our Branches"
+          title="Visit the showroom closest to you"
+          description="Explore our three branch locations across Addis Ababa and get a quick visual feel for each showroom before you visit."
+          action={<Link className="btn ghost" to="/branches">View All Branches</Link>}
+        />
+
+        <div className="grid cols-3" style={{ gap: 16, marginTop: 18 }}>
+          {BRANCH_HIGHLIGHTS.map((branch) => (
+            <Link
+              key={branch.name}
+              to="/branches"
+              className="card hover-lift"
+              style={{ padding: 0, textDecoration: "none", color: "inherit" }}
+            >
+              <img
+                src={branch.image}
+                alt={branch.name}
+                style={{ width: "100%", height: 220, objectFit: "cover", display: "block" }}
+              />
+              <div style={{ padding: 18, display: "grid", gap: 8 }}>
+                <strong style={{ fontSize: 18 }}>{branch.name}</strong>
+                <p className="p" style={{ fontSize: 14 }}>{branch.note}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <section ref={contact} className="reveal">
         <div
           className="card glow"
@@ -817,6 +897,61 @@ function ImageTile({ src, title, note }) {
   );
 }
 
+function ColorSelectionTile({ activeFurnitureType, setActiveFurnitureType }) {
+  const activeColors = FURNITURE_COLOR_OPTIONS[activeFurnitureType];
+
+  return (
+    <div className="card hover-lift" style={{ padding: 18, minHeight: 180, display: "grid", gap: 14 }}>
+      <div style={{ display: "grid", gap: 6 }}>
+        <div style={{ fontWeight: 900 }}>Color selection</div>
+        <div className="small">Choose a furniture type and explore popular finish options.</div>
+      </div>
+
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {Object.keys(FURNITURE_COLOR_OPTIONS).map((type) => (
+          <button
+            key={type}
+            type="button"
+            className="btn ghost"
+            onClick={() => setActiveFurnitureType(type)}
+            style={{
+              borderRadius: 999,
+              padding: "8px 12px",
+              borderColor: activeFurnitureType === type ? "rgba(255,215,0,.5)" : undefined,
+              background: activeFurnitureType === type ? "rgba(255,215,0,.08)" : undefined,
+            }}
+          >
+            {type}
+          </button>
+        ))}
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+          gap: 10,
+        }}
+      >
+        {activeColors.map((color) => (
+          <div key={`${activeFurnitureType}-${color.name}`} style={{ display: "grid", gap: 6 }}>
+            <div
+              style={{
+                height: 28,
+                borderRadius: 999,
+                background: color.hex,
+                border: "1px solid rgba(255,255,255,.16)",
+                boxShadow: "inset 0 0 0 1px rgba(0,0,0,.08)",
+              }}
+            />
+            <div className="small" style={{ lineHeight: 1.25 }}>{color.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function CategoryCard({ item, index }) {
   return (
     <Link
@@ -849,10 +984,7 @@ function ProductShowcase({ item, index }) {
         style={{ width: "100%", height: 260, objectFit: "cover", display: "block" }}
       />
       <div style={{ padding: 20, display: "grid", gap: 10 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "start" }}>
-          <div style={{ fontWeight: 950, fontSize: 18 }}>{item.name}</div>
-          <div style={{ color: "#FFD700", fontWeight: 950 }}>{item.price}</div>
-        </div>
+        <div style={{ fontWeight: 950, fontSize: 18 }}>{item.name}</div>
         <p className="p" style={{ fontSize: 14 }}>{item.description}</p>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           <Link className="btn primary" to="/products">
