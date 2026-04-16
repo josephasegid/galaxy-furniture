@@ -168,6 +168,26 @@ button, input, textarea{ font-family:inherit; }
   .grid.cols-3{ grid-template-columns: repeat(3, 1fr); }
 }
 
+.products-hero-layout{
+  display: grid;
+  gap: 18px;
+}
+
+.products-layout{
+  display: grid;
+  gap: 18px;
+}
+
+@media (min-width: 860px){
+  .products-hero-layout{
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  }
+
+  .products-layout{
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+}
+
 /* Buttons */
 .btn{
   font-family: var(--font-body);
