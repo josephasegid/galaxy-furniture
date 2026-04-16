@@ -188,6 +188,27 @@ button, input, textarea{ font-family:inherit; }
   }
 }
 
+@media (max-width: 859px){
+  .products-layout{
+    grid-template-columns: 1fr;
+  }
+
+  .products-main{
+    order: 2;
+  }
+
+  .products-cart{
+    order: 1;
+    width: 100%;
+    position: static !important;
+    top: auto !important;
+  }
+
+  .products-cart-actions .btn{
+    width: 100%;
+  }
+}
+
 /* Buttons */
 .btn{
   font-family: var(--font-body);

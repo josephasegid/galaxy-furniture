@@ -507,7 +507,7 @@ export default function Products({
         </section>
 
         <section className="products-layout" style={{ alignItems: "start", gap: 18 }}>
-          <div style={{ display: "grid", gap: 18 }}>
+          <div className="products-main" style={{ display: "grid", gap: 18 }}>
             <div className="card" style={{ padding: 18, display: "grid", gap: 14 }}>
               <div className="filters" style={{ justifyContent: "space-between" }}>
                 <input
@@ -676,7 +676,7 @@ export default function Products({
             )}
           </div>
 
-          <aside className="card" style={{ padding: 18, display: "grid", gap: 14, position: "sticky", top: 16 }}>
+          <aside className="card products-cart" style={{ padding: 18, display: "grid", gap: 14, position: "sticky", top: 16 }}>
             <div style={{ display: "grid", gap: 6 }}>
               <strong>{t("cart_summary")}</strong>
               <div className="small">{t("cart_demo")}</div>
@@ -695,7 +695,7 @@ export default function Products({
               </div>
             )}
 
-            <div style={{ display: "grid", gap: 10 }}>
+            <div className="products-cart-actions" style={{ display: "grid", gap: 10 }}>
               <a
                 className="btn primary"
                 href={cartItems.length ? whatsappCartUrl : undefined}
