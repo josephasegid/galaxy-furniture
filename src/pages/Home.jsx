@@ -71,6 +71,24 @@ const FEATURED_PRODUCTS = [
   },
 ];
 
+const RECENT_PRODUCTS = [
+  {
+    name: "Red King Sofa",
+    description: "A recently added sofa with bold color, premium upholstery, and showroom-ready comfort.",
+    image: "/products/Sofas _2/Red King.jpg",
+  },
+  {
+    name: "Golden King Corner",
+    description: "A modern corner sofa with polished detailing and rich finishes for high-end living spaces.",
+    image: "/products/Sofas _2/King Golden corner.webp",
+  },
+  {
+    name: "Dark Blue King",
+    description: "A deep blue king-size sofa designed for family rooms and elegant lounge settings.",
+    image: "/products/Sofas _2/dark blue king 1.webp",
+  },
+];
+
 const BRANCH_HIGHLIGHTS = [
   {
     name: "Showroom 1 - Semit 72",
@@ -281,6 +299,7 @@ export default function Home() {
   const story = useReveal();
   const categories = useReveal();
   const products = useReveal();
+  const recent = useReveal();
   const about = useReveal();
   const reasons = useReveal();
   const highlight = useReveal();
@@ -528,6 +547,21 @@ export default function Home() {
 
         <div className="grid cols-3" style={{ gap: 18 }}>
           {FEATURED_PRODUCTS.map((item, index) => (
+            <ProductShowcase key={item.name} item={item} index={index} />
+          ))}
+        </div>
+      </section>
+
+      <section ref={recent} className="card reveal" style={{ padding: 24 }}>
+        <SectionHeader
+          badge="Recent Products"
+          title="New arrivals in the showroom"
+          description="Freshly added furniture pieces from Galaxy Furniture, selected for modern style and strong finishing."
+          action={<Link className="btn ghost" to="/products">View All Products</Link>}
+        />
+
+        <div className="grid cols-3" style={{ gap: 18, marginTop: 18 }}>
+          {RECENT_PRODUCTS.map((item, index) => (
             <ProductShowcase key={item.name} item={item} index={index} />
           ))}
         </div>

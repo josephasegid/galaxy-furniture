@@ -169,6 +169,7 @@ const SOFA_FILES = [
   "Key sofa skyblue.webp",
   "Key sofa.webp",
   "King Blue.webp",
+  "Red King.jpg",
   "king Dining And sofa.webp",
   "King golden 1.webp",
   "King Golden 3.webp",
@@ -212,6 +213,24 @@ const SOFA_FILES = [
   "Rectangular c Textured.webp",
   "Rectangular gray Textured.webp",
   "Rectangular light gray Textured.webp",
+
+];
+
+const NEW_ADDED_SOFA_FILES = [
+  "7 Seat arm wood central.webp",
+  "7 Seat arm wood left.webp",
+  "7 Seat arm wood right.webp",
+  "7 Seat arm wood set.webp",
+  "King Burgundy  left.webp",
+  "King Burgundy central.webp",
+  "King Burgundy coffee.webp",
+  "King Burgundy corner.webp",
+  "King Burgundy right.webp",
+  "King Burgundy Set.webp",
+  "Oval Shaped Sofa Central.webp",
+  "Oval Shaped Sofa left.webp",
+  "Oval Shaped Sofa Right.webp",
+  "Oval Shaped Sofa.webp",
 ];
 
 const DINING_FILES = [
@@ -313,6 +332,7 @@ const FEATURED_LOOSE_FILES = [
 
 const PRODUCT_CATALOG = [
   ...createProductsFromFiles(SOFA_FILES, "Sofas", "/products/Sofas _2", ["Custom", "Fabric", "Available"]),
+  ...createProductsFromFiles(NEW_ADDED_SOFA_FILES, "Sofas", "/products/Sofas _2/new aded sofa", ["Custom", "Fabric", "Available"]),
   ...createProductsFromFiles(BEDS_2_FILES, "Beds", "/products/Beds_2", ["Custom", "Headboard", "Available"]),
   ...createProductsFromFiles(DOUBLE_BED_FILES, "Beds", "/products/Double Bed", ["Custom", "Color", "Available"]),
   ...createProductsFromFiles(BEDS_WEB_FILES, "Beds", "/products/beds web/images", ["Custom", "Size", "Available"]),
@@ -1152,8 +1172,8 @@ function buildFamilyKey(name, category = "") {
   }
 
   return cleaned
-    .replace(/\s+(coffee|corner)\b.*$/i, "")
-    .replace(/\s+(center|centere)\s+(table|tabel)\b.*$/i, "")
+    .replace(/\s+(coffee|corner|left|right|front|back|center|centere|central|set)\b.*$/i, "")
+    .replace(/\s+(table|tabel)\b.*$/i, "")
     .replace(/\s+dining\s+and\s+sofa\b.*$/i, "")
     .replace(/\s+\d+$/, "")
     .trim();
@@ -1165,8 +1185,8 @@ function buildGroupName(name, category = "") {
   }
 
   return name
-    .replace(/\s+(coffee|corner)\b.*$/i, "")
-    .replace(/\s+(center|centere)\s+(table|tabel)\b.*$/i, "")
+    .replace(/\s+(coffee|corner|left|right|front|back|center|centere|central|set)\b.*$/i, "")
+    .replace(/\s+(table|tabel)\b.*$/i, "")
     .replace(/\s+dining\s+and\s+sofa\b.*$/i, "")
     .replace(/\s+\d+$/, "")
     .trim();
